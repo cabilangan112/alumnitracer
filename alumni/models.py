@@ -96,6 +96,25 @@ class Course(models.Model):
     class Meta:
         ordering = ['-id']
 
+class Department(models.Model):
+    user                                = models.ForeignKey(User, on_delete = models.CASCADE)
+    department_code                     = models.CharField(max_length = 255)
+    department_description              = models.TextField()
+    date_created                        = models.DateTimeField(auto_now_add = True)
+    date_modified                       = models.DateTimeField(auto_now = True)
+    slug                                = models.SlugField(null=True, blank=True)
+
+    def __str__(self):
+        return '{} - {}'.format(self.department_code, self.department_description)
+
+    @property
+    def slug_title(self):
+        return '{}'.format(self.department_code)
+
+    class Meta:
+        ordering = ['-id']
+
+
 class PersonalInformation(models.Model):
     user                                = models.ForeignKey(User, on_delete = models.CASCADE)
     last_name                           = models.CharField(max_length = 255)
@@ -128,6 +147,7 @@ class PersonalInformation(models.Model):
     facebook_account                    = models.CharField(max_length = 255)
     twitter_account                     = models.CharField(max_length = 255)
     course                              = models.ForeignKey('Course', on_delete = models.CASCADE)
+    depatment                           = models.ForeignKey('Department', on_delete = models.CASCADE)
     date_graduated                      = models.DateTimeField()
     organization_or_employer            = models.CharField(max_length = 255)
     address_organization_or_employer    = models.CharField(max_length = 255)

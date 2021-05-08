@@ -9,6 +9,7 @@ from .models import (
         Parallax,
         PersonalInformation
     )
+ 
 from .forms import PersonalInformationForm
 # Create your views here.
 
@@ -16,9 +17,11 @@ class HomeView(View):
     def get(self, request, *args, **kwargs):
         index = Index.objects.all()
         parallax = Parallax.objects.all()[:1]
+ 
         thumbnail = Thumbnail.objects.all()[:3]
         context = {
             'index': index,
+ 
             'parallax': parallax,
             'thumbnail': thumbnail
         }
@@ -58,4 +61,3 @@ class PersonalInfoCreateView(View):
         context = {
             'form': form
         }
-        return render(request, self.template_name, context)

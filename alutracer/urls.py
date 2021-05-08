@@ -22,13 +22,8 @@ from alumni.views import HomeView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),
-#    path('login/', LoginView.as_view(), name='login'),
-#    path('logout/', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
-#    path('oauth', include('social_django.urls', namespace='social')),
-    #App Urls
- #   path('pdfdrive/', include('pdfdrive.urls', namespace='pdfdrive')),
- #   path('alutracer/', include('alutracer.urls', namespace='alutracer')),
-  #  path('user/', include('account.urls', namespace='user'))
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
