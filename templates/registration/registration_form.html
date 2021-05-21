@@ -1,6 +1,4 @@
-{% load static  %}
-<!DOCTYPE html>
-<html>
+ 
 {% load static %}
 <!DOCTYPE html>
 <html lang=en>
@@ -13,143 +11,97 @@
   <link rel="stylesheet" href="{% static 'css/registration.css' %}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+ 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <title>NDMC Archiving</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-custom navbar-mainbg">
-      <img class="ico" alt="Brand" src="{% static '/img/logo.jpeg' %}">
-      <h3 class="navbar-brand navbar-logo">NOTRE DAME OF MIDSAYAP COLLEGE
-      <br>
-      <span>Making a Positive Difference</span></h3>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars text-white"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-          <li class="nav-item ">
-            <a class="nav-link" href="javascript:void(0);"><i class="far fa-address-book"></i>Research</a>
+    <div class="container register">
+    <div class="row reg">
+    <div class="col-md-3 register-left">
+      <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+      <h3>Welcome</h3>
+      <p>You are 30 seconds away from earning your own money!</p>
+      <input type="submit" name="" value="Login"/><br/>
+    </div>
+      <div class="col-md-9 register-right">
+        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Employee</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"><i class="far fa-clone"></i>Authors</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"><i class="far fa-calendar-alt"></i>Departments</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"><i class="far fa-chart-bar"></i>Charts</a>
-          </li>
-          <li class="nav-item active ">
-            <a class="nav-link" data-target="#login-modal" href='{% url "login" %}'><i class="far fa-copy"></i>Login</a>
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Hirer</a>
           </li>
         </ul>
-      </div>
-    </nav>
-    <div class="container">
-      <div class="row py-5 mt-4 align-items-center">
-        <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
-            <img src="{% static '/img/reg_gif.gif' %}" alt="" class="img-fluid mb-3 d-none d-md-block">
-            <h1>Create an Account</h1>
-            <p class="font-italic text-muted mb-0">Create a minimal registeration page using Bootstrap 4 HTML form elements.</p>
-            <p class="font-italic text-muted">Snippet By <a href="https://bootstrapious.com" class="text-muted">
-              <u>Bootstrapious</u></a>
-            </p>
-        </div>    
-
-        <div class="col-md-7 col-lg-6 ml-auto">
           <form method="post" ctype="multipart/form-data">
             {% csrf_token %}
-            <div class="row">
-              <div class="input-group col-lg-6 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                    <i class="fa fa-user text-muted">ID Number :</i>
-                  </span>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <h3 class="register-heading">Alumni Registration</h3>
+            <div class="row register-form">
+              <div class="col-md-6">
+                <div class="form-group">
+                   <label class="mb-0">
+                    <h6 class="mb-0 text-sm">{{ form.id_number.label_tag }}</h6>
+                  </label>{{ form.id_number }}
                 </div>
-                {{ form.id_number }}
-              </div>
-              <div class="input-group col-lg-6 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                    <i class="fa fa-user text-muted">Last Name :</i>
-                  </span>
+                <div class="form-group">
+                  <label class="mb-0">
+                    <h6 class="mb-0 text-sm">{{ form.last_name.label_tag }}</h6>
+                  </label>{{ form.last_name }}
                 </div>
-                {{ form.last_name }}
-              </div>
-              <div class="input-group col-lg-6 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                    <i class="fa fa-user text-muted">MI :</i>
-                  </span>
+                                <div class="form-group">
+                  <label class="mb-0">
+                    <h6 class="mb-0 text-sm">{{ form.middle_initial.label_tag }}</h6>
+                  </label>{{ form.middle_initial }}
                 </div>
-                {{ form.middle_initial }}
-              </div>
-              <div class="input-group col-lg-6 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                    <i class="fa fa-user text-muted">First Name :</i>
-                  </span>
-                </div>
-                {{ form.first_name }}
-              </div>
-                        <div class="input-group col-lg-6 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                     <i class="fa fa-user text-muted">Department :</i>
-                  </span>
-                </div>
-                {{ form.department }}
-              </div>
-              <div class="input-group col-lg-6 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                    <i class="fa fa-user text-muted">Course : </i>
-                  </span>
-                </div>
-                {{ form.course }}
-              </div>
-                <div class="input-group col-lg-6 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                     <i class="fa fa-user text-muted">Year </i>
-                  </span>
-                </div>
-                {{ form.Year }}
-              </div>
 
-              <div class="input-group col-lg-12 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                    <i class="fa fa-envelope text-muted">Email : </i>
-                  </span>
-                </div> 
-                {{ form.email }}
-              </div>
-              <div class="input-group col-lg-6 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                    <i class="fa fa-lock text-muted">Password</i>
-                  </span>
+                                <div class="form-group">
+                <label class="mb-1">
+                    <h6 class="mb-0 text-sm">{{ form.department.label_tag }}</h6>
+                  </label>{{ form.department}}
                 </div>
-                 {{ form.password1 }}
-              </div>
-              <div class="input-group col-lg-6 mb-4">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white px-4 border-md border-right-0">
-                    <i class="fa fa-lock text-muted">Confirm Password</i>
-                  </span>
+
+
+               <div class="form-group">
+                <label class="mb-1">
+                    <h6 class="mb-0 text-sm">{{ form.password1.label_tag }}</h6>
+                  </label>{{ form.password1}}
                 </div>
-                {{ form.password2 }}
               </div>
-                <div class="col-12">
-                <button class="login" type="submit" class="btn btn-success btn-lg float-c enter" value="{{ next }}">Sign up</button>
+                    <div class="col-md-6">
+                      <div class="form-group">
+         <label class="mb-0">
+                    <h6 class="mb-0 text-sm">{{ form.email.label_tag }}</h6>
+                  </label>{{ form.email }}
+                      </div>
+                                      <div class="form-group">
+                  <label class="mb-0">
+                    <h6 class="mb-0 text-sm">{{ form.first_name.label_tag }}</h6>
+                  </label>{{ form.first_name }}
                 </div>
-              <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
-                <div class="border-bottom w-100 ml-5"></div>
-                <span class="px-2 small text-muted font-weight-bold text-muted">OR</span>
-                <div class="border-bottom w-100 mr-5"></div>
-              </div>
-             {% block content %}
+                                                <div class="form-group">
+                  <label class="mb-0">
+                    <h6 class="mb-0 text-sm">{{ form.gender.label_tag }}</h6>
+                  </label>{{ form.gender }}
+                </div>
+                                <div class="form-group">
+                  <label class="mb-1">
+                    <h6 class="mb-0 text-sm">{{ form.course.label_tag }}</h6>
+                  </label>{{ form.course}}
+                </div>
+                                  <div class="form-group">
+                <label class="mb-1">
+                    <h6 class="mb-0 text-sm">{{ form.Year.label_tag }}</h6>
+                  </label>{{form.Year}}
+                </div>
+                <div class="form-group">
+                                     <label class="mb-1">
+                    <h6 class="mb-0 text-sm">{{ form.password2.label_tag }}</h6>
+                  </label>{{ form.password2}}
+                </div>
+              {% block content %}
               {% if form.errors %}
               <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
                 {% for field in form %}
@@ -157,17 +109,19 @@
                 {% endfor %}
               </div>
               {% endif %}
-              <div class="text-center w-100">
-                <p class="text-muted font-weight-bold">Already Registered? <a href='{% url "login" %}'class="text-primary ml-2">Login</a></p>
-              </div>
-            {% endblock %}
+              {% endblock %}
+                      <input type="submit" class="btnRegister"  value="{{ next }}Regester)"/>
+                  </div>
+                </div>
             </div>
-          </form>
+             
         </div>
+      </form>
       </div>
     </div>
-  </body>
-  {% include 'footer.html'%}
+    </div>
+    </body>
+     
 </html>
 {% include 'snippets/js.html' %}
 

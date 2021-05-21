@@ -56,7 +56,6 @@ class PersonalInformation(models.Model):
     last_name                           = models.CharField(max_length = 255)
     first_name                          = models.CharField(max_length = 255)
     middle_name                         = models.CharField(max_length = 255)
-    gender                              = models.CharField(max_length = 6, choices = GENDER)
     date_of_birth                       = models.DateField()
     civil_status                        = models.CharField( max_length = 10, choices = CIVIL_STATUS)
     age                                 = models.IntegerField()
