@@ -2,23 +2,14 @@ from datetime import date
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import (
-        Course,
-        Index,
-        Thumbnail,
-        Parallax,
-        PersonalInformation
-    )
+from .models import PersonalInformation
  
 from .forms import PersonalInformationForm
 # Create your views here.
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
-        index = Index.objects.all()
-        parallax = Parallax.objects.all()[:1]
- 
-        thumbnail = Thumbnail.objects.all()[:3]
+        index = Department.objects.all()
         context = {
             'index': index,
  

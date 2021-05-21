@@ -17,13 +17,20 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
+from account.views import LoginView, RegisterView 
 from alumni.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomeView.as_view(), name='home'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
+
+    path('account/', include('account.urls', namespace='user')),
+    path('alumni/', include('alumni.urls', namespace='alumni')),
+    path('register/',RegisterView.as_view(), name='register'),
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns.extend(
+    static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) +
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+)
+ 

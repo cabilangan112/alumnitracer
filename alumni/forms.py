@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Course, Index, Thumbnail, Parallax, PersonalInformation
+from .models import PersonalInformation
 
 User = get_user_model()
 
@@ -30,8 +30,6 @@ class PersonalInformationForm(forms.ModelForm):
             'b_country',
             'facebook_account',
             'twitter_account',
-            'course',
-            'date_graduated',
             'organization_or_employer',
             'address_organization_or_employer',
             'type_of_organization',
@@ -86,30 +84,6 @@ class PersonalInformationForm(forms.ModelForm):
             'degree_program',
             'pursuing_further_studies',     
             'not_pursuing_further_studies',
-            'name_1',
-            'contact_1',                        
-            'email_id_1',                        
-            'social_network_id_1',  
-
-            'name_2',
-            'contact_2',                        
-            'email_id_2',                        
-            'social_network_id_2',    
-
-            'name_3',
-            'contact_3',                        
-            'email_id_3',                        
-            'social_network_id_3', 
-
-            'name_4',
-            'contact_4',                        
-            'email_id_4',                        
-            'social_network_id_4',
-
-            'name_5',
-            'contact_5',                        
-            'email_id_5',                        
-            'social_network_id_5',
 
 
         ]

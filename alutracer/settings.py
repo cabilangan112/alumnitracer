@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'alumni.apps.AlumniConfig', 
+    'account.apps.AccountConfig', 
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
 
 LOGIN_REDIRECT_URL = '/login/'
 LOGIN_URL = '/login/'
+AUTH_USER_MODEL = 'account.User'

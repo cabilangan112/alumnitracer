@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save
 from django.conf import settings
-
+from account.models import User
 from .utils import unique_slug_generator
 
 User = settings.AUTH_USER_MODEL
@@ -20,115 +20,45 @@ CIVIL_STATUS = (
     ('Widowed', 'Widowed')
 )
 
-class Index(models.Model):
-    user                                = models.ForeignKey(User, on_delete = models.CASCADE)
-    cover_photo                         = models.ImageField(upload_to = 'media')
-    title                               = models.CharField(max_length = 255)
-    description                         = models.TextField()
-    date_created                        = models.DateTimeField(auto_now_add = True)
-    date_modified                       = models.DateTimeField(auto_now = True)
-    slug                                = models.SlugField(null=True, blank=True)
+CHOICES = (
+    ('Poorly', 'Poorly'),
+    ('Fairly', 'Fairly'),
+    ('Highly', 'Highly'),
+    ('Very Highly', 'Very Highly')
+)
 
-    def __str__(self):
-        return '{}'.format(self.title)
+class PersonalQuerySet(models.query.QuerySet):
+    def search(self,query): 
+        if query:
+            query = query.strip()
+            return self.filter(
+                Q(title__icontains=query)|
+                Q(author__last_name__icontains=query)|
+                Q(description_icontains=query)|
+                Q(author__last_name__icontains=query)|
+                Q(author__firstname__icontains=query)|
+                Q(author__department__icontains=query)|
+                Q(author__course__icontains=query)|
+                Q(author__Year__icontains=query) 
 
-    @property
-    def slug_title(self):
-        return '{}'.format(self.title)
+                ).distinct()
+        return self
+ 
+class PersonalManager(models.Manager):
+    def get_queryset(self):
+        return PersonalQuery(self.model, using=self._db)
 
-    class Meta:
-        ordering = ['-id']
-
-class Parallax(models.Model):
-    user                                = models.ForeignKey(User, on_delete = models.CASCADE)
-    parallax_1                          = models.ImageField(upload_to='media')
-    parallax_1_heading                  = models.CharField(max_length=255)
-    parallax_1_content                  = models.TextField()
-    parallax_2                          = models.ImageField(upload_to='media')
-    parallax_2_heading                  = models.CharField(max_length=255)
-    parallax_2_content                  = models.TextField()
-    date_created                        = models.DateTimeField(auto_now_add = True)
-    date_modified                       = models.DateTimeField(auto_now = True)
-    slug                                = models.SlugField(null=True, blank=True)
-
-    def __str__(self):
-        return '{}'.format(self.parallax_1_heading)
-
-    @property
-    def slug_title(self):
-        return '{}'.format(self.parallax_1_heading)
-
-    class Meta:
-        ordering = ['-id']
-
-class Thumbnail(models.Model):
-    user                                = models.ForeignKey(User, on_delete = models.CASCADE)
-    thumbnail                           = models.ImageField(upload_to='media')
-    date_created                        = models.DateTimeField(auto_now_add = True)
-    date_modified                       = models.DateTimeField(auto_now = True)
-    slug                                = models.SlugField(null=True, blank=True)
-
-    def __str__(self):
-        return '{}'.format(self.user)
-
-    @property
-    def slug_title(self):
-        return '{}'.format(self.user)
-
-    class Meta:
-        ordering = ['-id']
-
-class Course(models.Model):
-    user                                = models.ForeignKey(User, on_delete = models.CASCADE)
-    course_code                         = models.CharField(max_length = 255)
-    course_description                  = models.TextField()
-    date_created                        = models.DateTimeField(auto_now_add = True)
-    date_modified                       = models.DateTimeField(auto_now = True)
-    slug                                = models.SlugField(null=True, blank=True)
-
-    def __str__(self):
-        return '{} - {}'.format(self.course_code, self.course_description)
-
-    @property
-    def slug_title(self):
-        return '{}'.format(self.course_code)
-
-    class Meta:
-        ordering = ['-id']
-
-class Department(models.Model):
-    user                                = models.ForeignKey(User, on_delete = models.CASCADE)
-    department_code                     = models.CharField(max_length = 255)
-    department_description              = models.TextField()
-    date_created                        = models.DateTimeField(auto_now_add = True)
-    date_modified                       = models.DateTimeField(auto_now = True)
-    slug                                = models.SlugField(null=True, blank=True)
-
-    def __str__(self):
-        return '{} - {}'.format(self.department_code, self.department_description)
-
-    @property
-    def slug_title(self):
-        return '{}'.format(self.department_code)
-
-    class Meta:
-        ordering = ['-id']
-
+    def search(self, query):
+        return self.get_queryset().search(query)
 
 class PersonalInformation(models.Model):
     user                                = models.ForeignKey(User, on_delete = models.CASCADE)
     last_name                           = models.CharField(max_length = 255)
     first_name                          = models.CharField(max_length = 255)
     middle_name                         = models.CharField(max_length = 255)
-    gender                              = models.CharField(
-                                                            max_length = 6,
-                                                            choices = GENDER
-                                                        )
+    gender                              = models.CharField(max_length = 6, choices = GENDER)
     date_of_birth                       = models.DateField()
-    civil_status                        = models.CharField(
-                                                        max_length = 10,
-                                                        choices = CIVIL_STATUS
-                                                    )
+    civil_status                        = models.CharField( max_length = 10, choices = CIVIL_STATUS)
     age                                 = models.IntegerField()
     email                               = models.EmailField()
     mobile_number                       = models.CharField(max_length = 20)
@@ -146,8 +76,6 @@ class PersonalInformation(models.Model):
     b_country                           = models.CharField(max_length = 255)
     facebook_account                    = models.CharField(max_length = 255)
     twitter_account                     = models.CharField(max_length = 255)
-    course                              = models.ForeignKey('Course', on_delete = models.CASCADE)
-    depatment                           = models.ForeignKey('Department', on_delete = models.CASCADE)
     date_graduated                      = models.DateTimeField()
     organization_or_employer            = models.CharField(max_length = 255)
     address_organization_or_employer    = models.CharField(max_length = 255)
@@ -171,70 +99,45 @@ class PersonalInformation(models.Model):
     nature_of_employment                = models.CharField(max_length = 255)
     number_of_years                     = models.CharField(max_length = 10)
     monthly_income_range                = models.CharField(max_length = 20)
-    reason_of_unemployed                = models.TextField()
-    academic_professional               = models.CharField(max_length = 1)
-    research_capability                 = models.CharField(max_length = 1)
-    learning_efficiency                 = models.CharField(max_length = 1)
-    communication_skills                = models.CharField(max_length = 1)
-    people_skills                       = models.CharField(max_length = 1)
-    problem_solving_skills              = models.CharField(max_length = 1)
-    information_technology_skills       = models.CharField(max_length = 1)
-    meeting_present                     = models.CharField(max_length = 1)
-    local_community                     = models.CharField(max_length = 1)
-    international_community             = models.CharField(max_length = 1)
-    critical_thinking_skills            = models.CharField(max_length = 1)
-    salary_improvement                  = models.CharField(max_length = 1)
-    opportunities_abroad                = models.CharField(max_length = 1)
-    personality_development             = models.CharField(max_length = 1)
-    values_formation                    = models.CharField(max_length = 1)
-    range_of_courses                    = models.CharField(max_length = 1)
-    relevance_profession                = models.CharField(max_length = 1)
-    extracurricular_activities          = models.CharField(max_length = 1)
-    premium_given_research              = models.CharField(max_length = 1)
-    interdisciplinary_learning          = models.CharField(max_length = 1)
-    teaching_learning                   = models.CharField(max_length = 1)
-    quality_instruction                 = models.CharField(max_length = 1)
-    teacher_student_relationships       = models.CharField(max_length = 1)
-    library_resources                   = models.CharField(max_length = 1)
-    laboratory_resources                = models.CharField(max_length = 1)
-    class_size                          = models.CharField(max_length = 1)
-    professors_pedagogical              = models.CharField(max_length = 1)
-    professors_knowledge                = models.CharField(max_length = 1)
     degree_program                      = models.CharField(max_length = 255)
     pursuing_further_studies            = models.CharField(max_length = 255)
     not_pursuing_further_studies        = models.CharField(max_length = 255)
+    reason_of_unemployed                = models.TextField()
 
-    name_1                              = models.CharField(max_length = 255)
-    contact_1                           = models.CharField(max_length = 255)
-    email_id_1                          = models.CharField(max_length = 255)
-    social_network_id_1                 = models.CharField(max_length = 255)
-
-    name_2                              = models.CharField(max_length = 255)
-    contact_2                           = models.CharField(max_length = 255)
-    email_id_2                          = models.CharField(max_length = 255)
-    social_network_id_2                 = models.CharField(max_length = 255)
-
-    name_3                              = models.CharField(max_length = 255)
-    contact_3                           = models.CharField(max_length = 255)
-    email_id_3                          = models.CharField(max_length = 255)
-    social_network_id_3                 = models.CharField(max_length = 255)
-
-    name_4                              = models.CharField(max_length = 255)
-    contact_4                           = models.CharField(max_length = 255)
-    email_id_4                          = models.CharField(max_length = 255)
-    social_network_id_4                 = models.CharField(max_length = 255)
-
-    name_5                              = models.CharField(max_length = 255)
-    contact_5                           = models.CharField(max_length = 255)
-    email_id_5                          = models.CharField(max_length = 255)
-    social_network_id_5                 = models.CharField(max_length = 255)
-
-
-
-    
+    academic_professional               = models.CharField(max_length = 20, choices = CHOICES )
+    research_capability                 = models.CharField(max_length = 20, choices = CHOICES )
+    learning_efficiency                 = models.CharField(max_length = 20, choices = CHOICES )
+    communication_skills                = models.CharField(max_length = 20, choices = CHOICES )
+    people_skills                       = models.CharField(max_length = 20, choices = CHOICES )
+    problem_solving_skills              = models.CharField(max_length = 20, choices = CHOICES )
+    information_technology_skills       = models.CharField(max_length = 20, choices = CHOICES )
+    meeting_present                     = models.CharField(max_length = 20, choices = CHOICES )
+    local_community                     = models.CharField(max_length = 20, choices = CHOICES )
+    international_community             = models.CharField(max_length = 20, choices = CHOICES )
+    critical_thinking_skills            = models.CharField(max_length = 20, choices = CHOICES )
+    salary_improvement                  = models.CharField(max_length = 20, choices = CHOICES )
+    opportunities_abroad                = models.CharField(max_length = 20, choices = CHOICES )
+    personality_development             = models.CharField(max_length = 20, choices = CHOICES )
+    values_formation                    = models.CharField(max_length = 20, choices = CHOICES )
+    range_of_courses                    = models.CharField(max_length = 20, choices = CHOICES )
+    relevance_profession                = models.CharField(max_length = 20, choices = CHOICES )
+    extracurricular_activities          = models.CharField(max_length = 20, choices = CHOICES )
+    premium_given_research              = models.CharField(max_length = 20, choices = CHOICES )
+    interdisciplinary_learning          = models.CharField(max_length = 20, choices = CHOICES )
+    teaching_learning                   = models.CharField(max_length = 20, choices = CHOICES )
+    quality_instruction                 = models.CharField(max_length = 20, choices = CHOICES )
+    teacher_student_relationships       = models.CharField(max_length = 20, choices = CHOICES )
+    library_resources                   = models.CharField(max_length = 20, choices = CHOICES )
+    laboratory_resources                = models.CharField(max_length = 20, choices = CHOICES )
+    class_size                          = models.CharField(max_length = 20, choices =CHOICES )
+    professors_pedagogical              = models.CharField(max_length = 20, choices =CHOICES )
+    professors_knowledge                = models.CharField(max_length = 20, choices =CHOICES )
+ 
     date_created                        = models.DateTimeField(auto_now_add = True)
     date_modified                       = models.DateTimeField(auto_now = True)
     slug                                = models.SlugField(null=True, blank=True)
+
+    objects = PersonalManager()
 
     def __str__(self):
         return '{}, {} {}'.format(
@@ -254,8 +157,4 @@ def rl_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 
-pre_save.connect(rl_pre_save_receiver, sender=Index)
-pre_save.connect(rl_pre_save_receiver, sender=Thumbnail)
-pre_save.connect(rl_pre_save_receiver, sender=Parallax)
-pre_save.connect(rl_pre_save_receiver, sender=Course)
 pre_save.connect(rl_pre_save_receiver, sender=PersonalInformation)
