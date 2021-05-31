@@ -10,7 +10,6 @@ from django.contrib.auth import (
 )
 from django.views import generic
 from.models import User
- 
 from django.urls import reverse	
 from .forms import UserLoginForm, UserRegisterForm,EditProfileForm,EditPasswordForm,PersonnelUserRegisterForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -27,12 +26,6 @@ class ProfileDetailView(LoginRequiredMixin, View):
         context = {'user':user,}
         return render(request, "profile/profile_detail.html", context)
 
-class ProfileReserveView(LoginRequiredMixin,View):
-    def get(self, request, email, *args, **kwargs):
-        user = get_object_or_404(User, email=email)
-        context = {'user':user,}
-        return render(request, "profile/profile-reserve.html", context)
-
 class ProfileAdminView(View):
     def get(self, request,*args, **kwargs):
         query = self.request.GET.get('q')
@@ -42,32 +35,33 @@ class ProfileAdminView(View):
             return render(request, "profile/profile_admin.html",{'prof':qs,})
         return render(request, "profile/profile_admin.html",{'prof':qs,})
 
-
 class LoginView(TemplateView):
-	"""
-	Display log in page where registered users can log in
-	"""
-	template_name = "registration/login.html"
 
-	def get_context_data(self, *args, **kwargs):
-		context = super(LoginView, self).get_context_data(*args, **kwargs)
-		title = "Login"
-		form = UserLoginForm(self.request.POST or None)
-		context.update({
+    template_name = "registration/login.html"
+ 
+    def get_context_data(self, *args, **kwargs):
+        context = super(LoginView, self).get_context_data(*args, **kwargs)
+        title = "Login"
+        form = UserLoginForm(self.request.POST or None)  
+        context.update({
 			"title":title,
 			"form":form,
 		})
-		return context
+        return context
 
-	def post(self, *args, **kwargs):
-		context = self.get_context_data()
-		form = context.get('form')
-		if form.is_valid():
-			user = form.save()
-			login(self.request, user)
-			return redirect("home")
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        form = context.get('form')
+        if form.is_valid():
+            user = form.save()
+            login(self.request, user)
+            if self.request.user.is_authenticated and request.user.is_staff:
+                return redirect('alumni:alumni-list')
+            else:
+                login(self.request, user)
+                return redirect('user:detail', email=user.email)
 
-		return render(self.request, self.template_name, context)
+        return render(self.request, self.template_name, context)
 
 class RegisterView(TemplateView):
 	"""
@@ -92,7 +86,7 @@ class RegisterView(TemplateView):
 		if form.is_valid():
 			user = form.save()
 			login(self.request, user,backend='django.contrib.auth.backends.ModelBackend')
-			return redirect("/")
+			return redirect('alumni:personal-form', email=user.email)
 		return render(self.request, self.template_name, context)
                                        
 def  EditProfileView(request, pk):

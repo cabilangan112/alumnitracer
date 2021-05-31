@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'alumni.apps.AlumniConfig', 
     'account.apps.AccountConfig', 
+    'django_countries',
 ]
 
 MIDDLEWARE = [

@@ -1,114 +1,79 @@
+ 
 {% load static %}
 <!DOCTYPE html>
 <html lang=en>
   <head> 
   {% include 'snippets/css.html'%}
-  <title>Archiving</title>
+ 
   <meta charset="utf-8">
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{% static 'css/login.css' %}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <title>NDMC Archiving</title>
+   
+  <title>NDMC Alumni tracer|Login</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-custom navbar-mainbg">
-      <img class="ico" alt="Brand" src="{% static '/img/logo.jpeg' %}">
-      <h3 class="navbar-brand navbar-logo">NOTRE DAME OF MIDSAYAP COLLEGE
-      <br>
-      <span>Making a Positive Difference</span></h3>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars text-white"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-          <li class="nav-item ">
-            <a class="nav-link" href="javascript:void(0);"><i class="far fa-address-book"></i>Research</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"><i class="far fa-clone"></i>Authors</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"><i class="far fa-calendar-alt"></i>Departments</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);"><i class="far fa-chart-bar"></i>Charts</a>
-          </li>
-              {% if user.is_authenticated %}
-                {% if request.user.is_staff %}
-                  <li><a href=" " class="user">Reserve List</a></li>
-                  <li><a href=" ">Reserved Books</a></li>
-                  <li><a href='{% url "logout" %}'><span>Logout<span></a></li>
-                {% else %}
-                  <li><a href='{% url "user:detail" user.email %}' class="user">{{ user.email}}</a></li>
-                  <li><a href='{% url "logout" %}'><span>Logout<span></a></li>
-                {% endif %}
-              {% else %}  
-            <li class="nav-item active">
-              <a class="nav-link"  href='{% url "login" %}'><i class="far fa-copy"></i>Login</a>
+    <div class="container register">
+      <div class="row reg">
+        <div class="col-md-3 register-left">
+          <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+          <h3>Welcome to Alumni Tracer</h3>
+          <p>Tracer studies can be defined
+as retrospective analyses of
+graduates through a standardised
+survey, which takes place some
+time after graduation (normally
+between 6 months and 3 years). </p>
+          
+        </div>
+        <div class="col-md-9 register-right">
+          <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Alumni</a>
             </li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
-    {% block content %}
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
-        <div class="card card0 border-0">
-          <div class="row d-flex">
-            <div class="col-lg-6">
-              <div class="card1 pb-5">
-              <div class="row"> <img  src="{% static '/img/logo.jpeg' %}" class="logo"> </div>
-                <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img src="https://i.imgur.com/uNGdWHi.png" class="image"> 
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card2 card border-0 px-4 py-5">
- 
-                <div class="row px-3 mb-4">
-                  <div class="line"></div> <small class="or text-center"><h6>Login</h6></small>
-                  <div class="line"></div>
-                </div>
-                <div class="row px-3">
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Tracer</a>
+            </li>
+          </ul>
+          <form method="post" ctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h3 class="register-heading">Alumni Registration</h3>
+                <div class="row register-form">
+                  <div class="col-md-6">
+                    <div class="form-group">
                   <label class="mb-1">
                     <h6 class="mb-0 text-sm">{{ form.email.label_tag }}</h6>
                   </label>{{ form.email }}
-                </div>
-                <div class="row px-3"> 
-                  <label class="mb-1">
-                    <h6 class="mb-0 text-sm">{{ form.password.label_tag }}</h6>
-                  </label>{{ form.password }}
-                </div>
-                {% if form.errors %}
-                <div style="margin-right: 30px;" class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert" >
-                  {% if form.errors %}
-                    <p>Email Address and Password didn't match</p>
-                  {% endif %}
-                </div>
-                {% endif %}
-                <div class="row px-3 mb-4">
-                  <div class="custom-control custom-checkbox custom-control-inline"> 
-                    <input id="chk1" type="checkbox" name="chk" class="custom-control-input"> 
-                    <label for="chk1" class="custom-control-label text-sm">Remember me</label>
-                  </div> <a href="#" class="ml-auto mb-0 text-sm">Forgot Password?</a>
-                  <div class="col-12">
-                    <input type="submit" value="Login" class="btn foode-btn"/>
-                    <input type="hidden" name="next" value="{{ next }}" />
-                  </div>
-                </div>
+                    </div>
+                    <div class="form-group">
+                    <label class="mb-1">
+                      <h6 class="mb-0 text-sm">{{ form.password.label_tag }}</h6>
+                    </label>{{ form.password }}
+                    </div>
+                    {% block content %}
+                    {% if form.errors %}
+                    <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
+                      {% for field in form %}
+                        {{ field.errors }}
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                  {% endblock %}
                 <div class="row mb-4 px-3"> <small class="font-weight-bold">Don't have anaccount?  <a class="text-danger " href='{% url "register" %}'>Register</a></small> 
                   </div>
+              <input type="submit" class="btnRegister"  value="{{ next }}Login"/>
+                </div>
+
               </div>
-            </div>
+            </div>       
           </div>
-        </div>
+        </form>
       </div>
-    </form>
-  </body>
-  {% endblock %}
-  {% include 'footer.html'%}  
+    </div>
+  </div>
+</body>
 </html>
+{% include 'snippets/js.html' %}
+ 

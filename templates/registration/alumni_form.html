@@ -1,0 +1,726 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Almni Tracer | Form</title>
+    {% include 'snippets/css.html'%}
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+      <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+        <link rel="stylesheet" href="{% static 'css/alumni.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  </head>
+ 
+ 
+<div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a href="#">Alumni Tracer</a>
+        <div id="close-sidebar">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+
+      <div class="sidebar-header">
+      {% if user.is_authenticated %}
+          {% if request.user.is_staff %}
+        <div class="user-pic">
+          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ user.first_name}}
+            <strong> {{ user.last_name}}</strong>
+          </span>
+          <span class="user-role">Administrator</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+     
+            <span>Online</span>
+          </span>
+        </div>
+         {% else %}
+          <div class="user-pic">
+          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+ 
+         
+          <span class="user-role">Students</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+     
+            <span>Online</span>
+          </span>
+        </div>
+                {% endif %}
+       
+        {% endif %}
+      </div>
+      <!-- sidebar-header  -->
+      <div class="sidebar-search">
+        <div>
+          <div class="input-group">
+            <input type="text" class="form-control search-menu" placeholder="Search...">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+              <span class="badge badge-pill badge-warning">New</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Dashboard 1
+                    <span class="badge badge-pill badge-success">Pro</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Dashboard 2</a>
+                </li>
+                <li>
+                  <a href="#">Dashboard 3</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-shopping-cart"></i>
+              <span>E-commerce</span>
+              <span class="badge badge-pill badge-danger">3</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Products
+
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Orders</a>
+                </li>
+                <li>
+                  <a href="#">Credit cart</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="far fa-gem"></i>
+              <span>Components</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">General</a>
+                </li>
+                <li>
+                  <a href="#">Panels</a>
+                </li>
+                <li>
+                  <a href="#">Tables</a>
+                </li>
+                <li>
+                  <a href="#">Icons</a>
+                </li>
+                <li>
+                  <a href="#">Forms</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-chart-line"></i>
+              <span>Charts</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Pie chart</a>
+                </li>
+                <li>
+                  <a href="#">Line chart</a>
+                </li>
+                <li>
+                  <a href="#">Bar chart</a>
+                </li>
+                <li>
+                  <a href="#">Histogram</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-globe"></i>
+              <span>Maps</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Google maps</a>
+                </li>
+                <li>
+                  <a href="#">Open street map</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="header-menu">
+            <span>Extra</span>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-book"></i>
+              <span>Documentation</span>
+              <span class="badge badge-pill badge-primary">Beta</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-calendar"></i>
+              <span>Calendar</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-folder"></i>
+              <span>Examples</span>
+            </a>
+          </li>
+        </ul>
+    </div>
+    <div class="sidebar-footer">
+      <a href="#">
+        <i class="fa fa-bell"></i>
+        <span class="badge badge-pill badge-warning notification">3</span>
+      </a>
+      <a href="#">
+        <i class="fa fa-envelope"></i>
+        <span class="badge badge-pill badge-success notification">7</span>
+      </a>
+      <a href="#">
+        <i class="fa fa-cog"></i>
+        <span class="badge-sonar"></span>
+      </a>
+      <a href="#">
+        <i class="fa fa-power-off"></i>
+      </a>
+    </div>
+  </div>
+</nav>
+<body>
+<form method="post" ctype="multipart/form-data">
+                {% csrf_token %}
+  <!--  General -->
+  <div class="form-group">
+    <h2 class="heading">ALUMNI REGISTRATION</h2>
+            <div class="controls">
+
+ {{ form.user }}</div>
+ 
+    <div class="grid">
+        <div class="col-2-3">
+          <div class="controls">
+                      <span class="input-group-text bg-white px-4 border-md border-right-0">
+                    <i class="fa fa-user text-muted">Civil_status : </i>
+                  </span>
+            {{ form.civil_status}}
+          </div>          
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+            {{ form.age}}
+          </div>          
+        </div>
+      </div>
+                <div class="controls">
+                      <span class="input-group-text bg-white px-4 border-md border-right-0">
+                    <i class="fa fa-user text-muted">Date of Birth: </i>
+                  </span>
+            {{ form.date_of_birth}}
+          </div>  
+    
+                     <div class="controls">
+            {{ form.mobile_number }}
+          </div>     
+         
+               <div class="controls">
+            {{ form.a_street_adress }}
+          </div>          
+       
+     
+          <div class="controls">
+            {{ form.a_address_line_2 }}
+          </div> 
+
+      
+          <div class="controls">
+            {{ form.a_city }}
+          </div>          
+       
+     
+          <div class="controls">
+            {{ form.a_state_province_region }}
+          </div> 
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          {{ form.a_zip_code}}
+          </div>         
+        </div>
+        <div class="col-2-3">
+          <div class="controls">
+          {{ form.a_country }}
+          </div>         
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          {{ form.facebook_account}}
+          </div>         
+        </div>
+        <div class="col-2-3">
+          <div class="controls">
+          {{ form.twitter_account}}
+          </div>         
+        </div>
+      </div>
+        <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+                    <i class="fa fa-user text-muted">Date Graduate: </i>
+                  </span>
+          {{ form.date_graduated}}
+          </div>         
+        </div>
+        <div class="col-2-3">
+          <div class="controls">
+          {{ form.organization_or_employer}}
+          </div>         
+        </div>
+      </div>
+      <div class="controls">
+        {{ form.address_organization_or_employer}}
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          {{ form.type_of_organization }}
+          </div>         
+        </div>
+        <div class="col-2-3">
+          <div class="controls">
+          {{ form.employment_type }}
+          </div>         
+        </div>
+      </div>  
+          <div class="controls">
+          {{ form.ccupational_classification }}
+          </div>     
+      <div class="grid">
+        <div class="col-2-3">
+          <div class="controls">
+          {{ form.related_job }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          {{ form.number_year_company   }}
+          </div>         
+        </div>
+      </div>  
+
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          {{ form.place_of_work  }}
+          </div>         
+        </div>
+        <div class="col-2-3">
+          <div class="controls">
+          {{ form.finish_graduate_degree    }}
+          </div>         
+        </div>
+      </div>
+      <div class="controls">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+        <i class="fa fa-user text-muted"> Reason for Staying job : </i>
+      </span>
+      {{ form.reason_staying_job  }}
+      </div>
+                <div class="controls">
+            {{ form.designation}}
+          </div> 
+                    <div class="controls">
+            {{ form.department_division }}
+          </div> 
+
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          {{ form.job_status  }}
+          </div>         
+        </div>
+        <div class="col-2-3">
+          <div class="controls">
+          {{ form.monthly_range_income }}
+          </div>         
+        </div>
+      </div>
+                <div class="controls">
+            {{ form.persuing_degree_ndmc }}
+          </div> 
+          <div class="controls">
+            {{ form.obtaining_degree_ndmc }}
+          </div> 
+                    <div class="controls">
+            {{ form.current_job }}
+          </div> 
+          <div class="controls">
+            {{ form.first_employment  }}
+          </div> 
+      <div class="controls">
+ 
+      {{ form.work_related_course }}
+      </div>
+      <div class="controls">
+      {{ form.nature_of_employment }}
+      </div>
+      <div class="grid">
+        <div class="col-2-3">
+          <div class="controls">
+          {{ form.number_of_years   }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          {{ form.monthly_range_income }}
+          </div>         
+        </div>
+      </div>
+                  <div class="controls">
+      {{ form.degree_program  }}
+      </div>
+            <div class="controls">
+      {{ form.monthly_income_range  }}
+      </div>
+            <div class="controls">
+      {{ form.pursuing_further_studies}}
+      </div>
+            <div class="controls">
+      {{ form.not_pursuing_further_studies}}
+      </div>
+      <div class="controls">
+        <span class="input-group-text bg-white px-4 border-md border-right-0">
+        <i class="fa fa-user text-muted"> Reason of Unemployed : </i>
+        </span>
+      {{ form.reason_of_unemployed }}
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Academic Professional: </i>
+          </span>
+          {{ form.academic_professional   }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Research Capability: </i>
+          </span>
+          {{ form.research_capability }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Learning Efficiency : </i>
+          </span>
+          {{ form.learning_efficiency }}
+          </div>         
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Communication Skill: </i>
+          </span>
+          {{ form.communication_skills   }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> People Skills: </i>
+          </span>
+          {{ form.people_skills }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Problem Solving Skills : </i>
+          </span>
+          {{ form.problem_solving_skills  }}
+          </div>         
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Information Technology Skills: </i>
+          </span>
+          {{ form.information_technology_skills  }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Critical Thinking Skills : </i>
+          </span>
+          {{ form.critical_thinking_skills }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Salary Improvement : </i>
+          </span>
+          {{ form.salary_improvement  }}
+          </div>         
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Meeting present </i>
+          </span>
+          {{ form.meeting_present }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Local Community : </i>
+          </span>
+          {{ form.local_community }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> International Community  : </i>
+          </span>
+          {{ form.international_community   }}
+          </div>         
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Opportunities Abroad : </i>
+          </span>
+          {{ form.opportunities_abroad   }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Personality Development  : </i>
+          </span>
+          {{ form.personality_development }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Values Formation  : </i>
+          </span>
+          {{ form.values_formation  }}
+          </div>         
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Range of Courses  : </i>
+          </span>
+          {{ form.range_of_courses  }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Relevance Profession  : </i>
+          </span>
+          {{ form.relevance_profession  }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Extracurricular Activities : </i>
+          </span>
+          {{ form.extracurricular_activities }}
+          </div>         
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Premium Given Research : </i>
+          </span>
+          {{ form.range_of_courses  }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Interdisciplinary Learning  : </i>
+          </span>
+          {{ form.interdisciplinary_learning  }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Teaching Learning  : </i>
+          </span>
+          {{ form.teaching_learning }}
+          </div>         
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Quality Instruction  : </i>
+          </span>
+          {{ form.quality_instruction  }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Teacher Student Relationships  : </i>
+          </span>
+          {{ form.teacher_student_relationships  }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Library Resources   : </i>
+          </span>
+          {{ form.library_resources }}
+          </div>         
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Laboratory Resources : </i>
+          </span>
+          {{ form.laboratory_resources }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Class Size  : </i>
+          </span>
+          {{ form.class_size }}
+          </div>         
+        </div>
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Professors Pedagogical  : </i>
+          </span>
+          {{ form.professors_pedagogical }}
+          </div>         
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted">  Premium Given Research : </i>
+          </span>
+          {{ form.premium_given_research}}
+          </div>         
+        </div>
+ 
+        <div class="col-1-3">
+          <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+          <i class="fa fa-user text-muted"> Professors Knowledge  : </i>
+          </span>
+          {{ form.professors_knowledge }}
+          </div>         
+        </div>
+      </div>
+         </div>
+ 
+              {% if form.errors %}
+              <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
+                {% for field in form %}
+                  {{ field.errors }}
+                {% endfor %}
+              </div>
+              {% endif %}
+ 
+          </div>
+
+     </div>
+                   </div>
+                <div class="col-12">
+                  <input type="submit" class="btnRegister"  value="{{ next }}Register"/>
+                </div>
+    </form>
+</div>
+</body>
+</body>
+<script src="{% static 'js/alumni.js' %}"></script>
+{% include 'snippets/js.html' %}
+</html>
+ {% endblock %}

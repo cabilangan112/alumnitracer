@@ -32,34 +32,28 @@ class PersonalQuerySet(models.query.QuerySet):
         if query:
             query = query.strip()
             return self.filter(
-                Q(title__icontains=query)|
-                Q(author__last_name__icontains=query)|
-                Q(description_icontains=query)|
-                Q(author__last_name__icontains=query)|
-                Q(author__firstname__icontains=query)|
-                Q(author__department__icontains=query)|
-                Q(author__course__icontains=query)|
-                Q(author__Year__icontains=query) 
+                Q(user__user__last_name__icontains=query)|
+                Q(user__user__firstname__icontains=query)|
+                Q(user__user__department__icontains=query)|
+                Q(user__user__course__icontains=query)|
+                Q(user__Year__icontains=query) 
 
                 ).distinct()
         return self
  
 class PersonalManager(models.Manager):
     def get_queryset(self):
-        return PersonalQuery(self.model, using=self._db)
+        return PersonalQuerySet(self.model, using=self._db)
 
     def search(self, query):
         return self.get_queryset().search(query)
 
 class PersonalInformation(models.Model):
     user                                = models.ForeignKey(User, on_delete = models.CASCADE)
-    last_name                           = models.CharField(max_length = 255)
-    first_name                          = models.CharField(max_length = 255)
-    middle_name                         = models.CharField(max_length = 255)
-    date_of_birth                       = models.DateField()
+ 
+    date_of_birth                       = models.CharField(max_length = 10)
     civil_status                        = models.CharField( max_length = 10, choices = CIVIL_STATUS)
-    age                                 = models.IntegerField()
-    email                               = models.EmailField()
+    age                                 = models.CharField(max_length = 10)
     mobile_number                       = models.CharField(max_length = 20)
     a_street_adress                     = models.TextField()
     a_address_line_2                    = models.TextField()
@@ -67,20 +61,14 @@ class PersonalInformation(models.Model):
     a_state_province_region             = models.CharField(max_length = 255)
     a_zip_code                          = models.CharField(max_length = 255)
     a_country                           = models.CharField(max_length = 255)
-    b_street_adress                     = models.TextField()
-    b_address_line_2                    = models.TextField()
-    b_city                              = models.CharField(max_length = 255)
-    b_state_province_region             = models.CharField(max_length = 255)
-    b_zip_code                          = models.CharField(max_length = 255)
-    b_country                           = models.CharField(max_length = 255)
     facebook_account                    = models.CharField(max_length = 255)
     twitter_account                     = models.CharField(max_length = 255)
-    date_graduated                      = models.DateTimeField()
+    date_graduated                      = models.CharField(max_length = 10)
     organization_or_employer            = models.CharField(max_length = 255)
     address_organization_or_employer    = models.CharField(max_length = 255)
     type_of_organization                = models.CharField(max_length = 20)
     employment_type                     = models.CharField(max_length = 60)
-    occupational_classification         = models.CharField(max_length = 70)
+ 
     related_job                         = models.CharField(max_length = 3)
     number_year_company                 = models.CharField(max_length = 10)
     place_of_work                       = models.CharField(max_length = 6)
@@ -139,15 +127,12 @@ class PersonalInformation(models.Model):
     objects = PersonalManager()
 
     def __str__(self):
-        return '{}, {} {}'.format(
-                        self.last_name,
-                        self.first_name,
-                        self.middle_name,
-                        )
+        return '{}'.format(self.user.last_name)
+ 
 
     @property
     def slug_title(self):
-        return '{}'.format(self.last_name)
+        return '{}'.format(self.user.last_name)
 
     class Meta:
         ordering = ['-id']
