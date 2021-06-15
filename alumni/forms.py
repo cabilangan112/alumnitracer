@@ -67,6 +67,7 @@ class PersonalInformationForm(forms.Form):
     a_country        =  forms.ChoiceField(choices = sorted(COUNTRIES.items()))
     facebook_account =  forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder': 'Facebook Account*'}))
     twitter_account  =  forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder': 'Twitter Acount *'}))
+    instagram_account  =  forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder': 'Instagram Acount *'}))    
     date_graduated   = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     organization_or_employer =  forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'Name of Organization/Employer * '}))
     address_organization_or_employer =  forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Address of Organization/Employe * '}))
@@ -142,6 +143,7 @@ class PersonalInformationForm(forms.Form):
             a_country           = data['a_country'],
             facebook_account    = data['facebook_account'],
             twitter_account     = data['twitter_account'],
+            instagram_account     = data['instagram_account'],
             date_graduated      = data['date_graduated'],
             organization_or_employer = data['organization_or_employer'],
             address_organization_or_employer = data['address_organization_or_employer'],

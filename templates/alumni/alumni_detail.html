@@ -1,26 +1,565 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Almni Tracer | Profile</title>
+  <head>
+    <title>Almni Tracer | Profile</title>
     {% include 'snippets/css.html'%}
-  <meta charset="utf-8">
-  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
-      <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
-        <link rel="stylesheet" href="{% static 'css/alumni.css' %}">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
     <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/alumni_detail.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   </head>
- 
-<body>
- <h1 style="position: center;">NO Template</h1>
-</div>
-</body>
-</body>
-<script src="{% static 'js/alumni.js' %}"></script>
-{% include 'snippets/js.html' %}
+  <div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a href="#">Alumni Tracer | Detail </a>
+        <div id="close-sidebar">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="sidebar-header">
+      {% if user.is_authenticated %}
+        {% if request.user.is_staff %}
+        <div class="user-pic">
+          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ user.first_name}}
+            <strong> {{ user.last_name}}</strong>
+          </span>
+          <span class="user-role">Administrator</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>     
+            <span>Online</span>
+          </span>
+        </div>
+         {% else %}
+          <div class="user-pic">
+          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ user.first_name}}
+            <strong>{{ user.last_name}}</strong>
+          </span>         
+          <span class="user-role">Students</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>
+        </div>
+          {% endif %}
+        {% endif %}
+      </div>
+      <div class="sidebar-search">
+        <div>
+          <div class="input-group">
+            <input type="text" class="form-control search-menu" placeholder="Search...">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+              <span class="badge badge-pill badge-warning">New</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Dashboard 1
+                    <span class="badge badge-pill badge-success">Pro</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Dashboard 2</a>
+                </li>
+                <li>
+                  <a href="#">Dashboard 3</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-shopping-cart"></i>
+              <span>E-commerce</span>
+              <span class="badge badge-pill badge-danger">3</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Products
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Orders</a>
+                </li>
+                <li>
+                  <a href="#">Credit cart</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="far fa-gem"></i>
+              <span>Components</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">General</a>
+                </li>
+                <li>
+                  <a href="#">Panels</a>
+                </li>
+                <li>
+                  <a href="#">Tables</a>
+                </li>
+                <li>
+                  <a href="#">Icons</a>
+                </li>
+                <li>
+                  <a href="#">Forms</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-chart-line"></i>
+              <span>Charts</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Pie chart</a>
+                </li>
+                <li>
+                  <a href="#">Line chart</a>
+                </li>
+                <li>
+                  <a href="#">Bar chart</a>
+                </li>
+                <li>
+                  <a href="#">Histogram</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-globe"></i>
+              <span>Maps</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Google maps</a>
+                </li>
+                <li>
+                  <a href="#">Open street map</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="header-menu">
+            <span>Extra</span>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-book"></i>
+              <span>Documentation</span>
+              <span class="badge badge-pill badge-primary">Beta</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-calendar"></i>
+              <span>Calendar</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-folder"></i>
+              <span>Examples</span>
+            </a>
+          </li>
+        </ul>
+    <div class="sidebar-footer">
+      <a href="#">
+        <i class="fa fa-bell"></i>
+        <span class="badge badge-pill badge-warning notification">3</span>
+      </a>
+      <a href="#">
+        <i class="fa fa-envelope"></i>
+        <span class="badge badge-pill badge-success notification">7</span>
+      </a>
+      <a href="#">
+        <i class="fa fa-cog"></i>
+        <span class="badge-sonar"></span>
+      </a>
+      <a href='{% url "logout" %}'>
+        <i class="fa fa-power-off"></i>
+      </a>
+    </div>
+    </div>
+  </div>
+  </nav>
+  <body>
+ <div class="container">
+    <div class="main-body">
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>{{alumni.user.first_name}} {{alumni.user.middle}} {{alumni.user.last_name}}</h4>
+                      <p class="text-secondary mb-1">Full Stack Developer</p>
+                      <p class="text-muted font-size-sm">{{alumni.a_address_line_2 }}, {{ qs.a_city  }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</h6>
+                    <span class="text-secondary">{{alumni.twitter_account }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
+                    <span class="text-secondary">bootdey</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
+                    <span class="text-secondary">bootdey</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Full Name : </h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{alumni.user.first_name}} {{alumni.user.middle}} {{alumni.user.last_name}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email :</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ alumni.user.email}} 
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Date of Birth : (mm/day/year)</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ alumni.date_of_birth}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Gender : </h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ alumni.user.gender }} 
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Civil Status : </h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ alumni.civil_status  }} 
+                    </div>
+                  </div>
+                  <hr> 
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Age : </h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ alumni.age}} 
+                    </div>
+                  </div>
+                  <hr> 
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Mobile Number :</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{alumni.mobile_number }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Address</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{alumni.a_street_adress }}, {{alumni.a_address_line_2   }}, {{alumni.a_city }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row gutters-sm">
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2"> EDUCATIONAL </i> BACKGROUND</h6>
+                      <div  >
+                        <div class="col-sm-9 text-secondary">
+                          <h6>Course Finished : 
+                            {{alumni.finish_graduate_degree }}
+                          </h6>
+                        </div>
+                      </div>
+                      <hr>
+                      <div  >
+                        <div class="col-sm-9 text-secondary">
+                          <h6>Date Graduated : 
+                            {{alumni.date_graduated}}
+                          </h6>
+                        </div>
+                      </div>
+                      <hr>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                       <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2"> EMPLOYMENT  </i> INFORMATION</h6>
+                      <div  >
+                        <div class="col-sm-9 text-secondary">
+                          <h6>Name of Organization/Employer: 
+                            {{alumni.organization_or_employer }}
+                          </h6>
+                        </div>
+                      </div>
+                      <hr>
+                      <div  >
+                        <div class="col-sm-9 text-secondary">
+                          <h6>Address of Organization/Employer: 
+                            {{alumni.address_organization_or_employer }}
+                          </h6>
+                        </div>
+                      </div>
+                      <hr>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Is your current job related to the course you took up in College of I.T. & Engr. </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{alumni.user.first_name}} {{alumni.user.middle}} {{alumni.user.last_name}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Number of years in the company: :</h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.user.email}} 
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Place of work: </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.date_of_birth}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Is this your first job after finishing your graduate degree : </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.date_of_birth}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Please state your reasons for staying on the job:
+                      </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.date_of_birth}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Place of work: </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.date_of_birth}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Department/Division: </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.date_of_birth}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Monthly Income Range:  </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.user.gender }} 
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Were you working while pursuing your degree at NDMC:</h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.user.gender }} 
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">If not, how long did it take you to find a job after obtaining your degree from NDMC?:</h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.user.gender }} 
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">How did you come to know about your current job? Through friends, relatives, written enquiries or Advertisement in media?:  </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.user.gender }} 
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                   <div class="col-sm-5">
+                      <h6 class="mb-0">IN THE CASE OF SELF EMPLOYMENT, what is the Nature of Employment?  </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.civil_status  }} 
+                    </div>
+                  </div>
+                  <hr> 
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Number of Years: </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.age}} 
+                    </div>
+                  </div>
+                  <hr> 
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Monthly Income Range:</h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.age}} 
+                    </div>
+                  </div>
+                  <hr> 
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">IN THE CASE OF UNEMPLOYED, Please state your reason(s) why you are unemployed: </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.age}} 
+                    </div>
+                  </div>
+                  <hr> 
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">IF PURSUING FURTHER STUDIES, <wbr>cdhat is the Degree Program and reasons for pursuing further studies?:/h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{alumni.mobile_number }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">IF NOT PURSUING FURTHER STUDIES, Please state your reason:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{alumni.a_street_adress }}, {{alumni.a_address_line_2   }}, {{alumni.a_city }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+  <script src="{% static 'js/alumni.js' %}"></script>
+  {% include 'snippets/js.html' %}
 </html>
  

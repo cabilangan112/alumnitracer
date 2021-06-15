@@ -8,32 +8,31 @@ from django.contrib.auth import (
 	login,
 	logout,
 )
+from alumni.models import PersonalInformation
 from django.views import generic
 from.models import User
 from django.urls import reverse	
 from .forms import UserLoginForm, UserRegisterForm,EditProfileForm,EditPasswordForm,PersonnelUserRegisterForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+ 
 
 class ProfileView(LoginRequiredMixin,View):
+ 
     def get(self, request,*args, **kwargs):
+        query = self.request.GET.get('q')
         user = User.objects.all()
-        context = {'user':user,}
-        return render(request, "profile/profile_list.html", context)
+        qs = PersonalInformation.objects.all().order_by("-date_modified").search(query)
+
+        if user and qs.exists():
+            return render(request, "profile/profile_list.html",{'user':qs})
+        return render(request, "profile/profile_list.html",{'user':qs})
+
 
 class ProfileDetailView(LoginRequiredMixin, View):
     def get(self, request, email, *args, **kwargs):
         user = get_object_or_404(User, email=email)
         context = {'user':user,}
         return render(request, "profile/profile_detail.html", context)
-
-class ProfileAdminView(View):
-    def get(self, request,*args, **kwargs):
-        query = self.request.GET.get('q')
-        qs = Book.objects.all().order_by("-title").search(query)
-
-        if prof and qs.exists():
-            return render(request, "profile/profile_admin.html",{'prof':qs,})
-        return render(request, "profile/profile_admin.html",{'prof':qs,})
 
 class LoginView(TemplateView):
 
@@ -88,7 +87,8 @@ class RegisterView(TemplateView):
 			login(self.request, user,backend='django.contrib.auth.backends.ModelBackend')
 			return redirect('alumni:personal-form', email=user.email)
 		return render(self.request, self.template_name, context)
-                                       
+
+                                     
 def  EditProfileView(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == "POST":

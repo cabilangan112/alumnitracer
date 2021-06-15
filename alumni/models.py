@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save
 from django.conf import settings
+from django.db.models import Q
 from account.models import User
 from .utils import unique_slug_generator
 
@@ -32,11 +33,9 @@ class PersonalQuerySet(models.query.QuerySet):
         if query:
             query = query.strip()
             return self.filter(
-                Q(user__user__last_name__icontains=query)|
-                Q(user__user__firstname__icontains=query)|
-                Q(user__user__department__icontains=query)|
-                Q(user__user__course__icontains=query)|
-                Q(user__Year__icontains=query) 
+                Q(user__last_name__icontains=query)|
+                Q(user__first_name__icontains=query)
+ 
 
                 ).distinct()
         return self
@@ -63,6 +62,7 @@ class PersonalInformation(models.Model):
     a_country                           = models.CharField(max_length = 255)
     facebook_account                    = models.CharField(max_length = 255)
     twitter_account                     = models.CharField(max_length = 255)
+    instagram_account                   = models.CharField(max_length = 255)    
     date_graduated                      = models.CharField(max_length = 10)
     organization_or_employer            = models.CharField(max_length = 255)
     address_organization_or_employer    = models.CharField(max_length = 255)

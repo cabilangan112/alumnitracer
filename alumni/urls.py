@@ -9,7 +9,7 @@ app_name='alutracer'
 
 urlpatterns = [
     path('list/', AlumniAdminView.as_view(), name='alumni-list'),
-    path('alumni/<email>/', AlumniAdminDetailView.as_view(), name='alumni-detail'),
+    path('alumni/<int:pk>/', AlumniAdminDetailView.as_view(), name='alumni-detail'),
     path('create/<email>/', PersonalInfoCreateView.as_view(), name='personal-form'),
  
  

@@ -4,27 +4,28 @@ from django.views import View
 from django.views.generic.base import TemplateView,View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import PersonalInformation
- 
+from account.decorators import user_required, staff_required
 from .forms import PersonalInformationForm
 # Create your views here.
 
-class AlumniAdminView(View):
+
+
+class AlumniAdminView(LoginRequiredMixin, View):
     def get(self, request,*args, **kwargs):
         query = self.request.GET.get('q')
-        qs = PersonalInformation.objects.all().order_by("date_modified").search(query)
+        qs = PersonalInformation.objects.all().order_by("-date_modified").search(query)
 
         if qs.exists():
             return render(request, "alumni/alumni_list.html",{'qs':qs,})
         return render(request, "alumni/alumni_list.html",{'qs':qs,})
-                
  
-class AlumniAdminDetailView(View):
-    def get(self, request, email, *args, **kwargs):
-        personal_info_detail = get_object_or_404(PersonalInformation, email=email)
+class AlumniAdminDetailView(LoginRequiredMixin, View):
+    def get(self, request, pk, *args, **kwargs):
+        alumni = get_object_or_404(PersonalInformation, pk=pk)
         context = {
-            'personal_info_detail':personal_info_detail
+            'alumni':alumni
         }
-        return render(request, 'alumni/alumni-detail.html', context)
+        return render(request, 'alumni/alumni_detail.html', context)
 
  
 class PersonalInfoCreateView(TemplateView):

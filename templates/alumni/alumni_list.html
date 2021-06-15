@@ -69,14 +69,16 @@
       <!-- sidebar-header  -->
       <div class="sidebar-search">
         <div>
+                <form class='form' method='GET' action='.'>
           <div class="input-group">
-            <input type="text" class="form-control search-menu" placeholder="Search...">
+            <input type="text" class="form-control search-menu" placeholder="Search..." name='q' value='{{ request.GET.q }}'>
             <div class="input-group-append">
               <span class="input-group-text">
-                <i class="fa fa-search" aria-hidden="true"></i>
+                     <button class='fa fa-search' aria-hidden="false" type='submit'></button> 
               </span>
             </div>
           </div>
+        </form>
         </div>
       </div>
       <div class="sidebar-menu">
@@ -214,7 +216,6 @@
             </a>
           </li>
         </ul>
- 
     <div class="sidebar-footer">
       <a href="#">
         <i class="fa fa-bell"></i>
@@ -243,19 +244,20 @@
     <div class="player-number">ID Number</div>
     <div class="player-name">Name</div>
     <div class="player-city">City</div>
-    <div class="player-country">Country</div>
-    <div class="player-value">Value</div>
-    <div class="player-stats">Stats</div>
+    <div class="player-country">Date Graduate</div>
+    <div class="player-value">Department</div>
+    <div class="player-stats">Course</div>
   </div>
   <div class="player">
     {% if qs %}
       {% for qs in qs %}
         <div class="player-number" data-title="Number: ">{{qs.user.id_number }}</div>
-        <div class="player-name" data-title="Name: ">{{qs.user.last_name}} {{qs.user.first_name}}</div>
-        <div class="player-city" data-title="City: ">New York</div>
-        <div class="player-country" data-title="Country: ">USA</div>
-        <div class="player-value" data-title="Value: ">$1500</div>
-        <div class="player-stats" data-title="Stats: ">10%</div>
+        <div class="player-name" data-title="Name: "><a  class="link" href="{% url "alumni:alumni-detail" qs.pk %}">
+        {{qs.user.last_name}} {{qs.user.first_name}}</a></div>
+        <div class="player-city" data-title="City: ">{{qs.a_street_adress }}, {{qs.a_address_line_2 }} {{qs.a_city}}</div>
+        <div class="player-country" data-title="Country: ">{{qs.date_graduated}}</div>
+        <div class="player-value" data-title="Value: ">{{qs.user.department }}</div>
+        <div class="player-stats" data-title="Stats: ">1{{qs.user.course }}</div>
       </div>
         {% endfor %}
       {% else %}

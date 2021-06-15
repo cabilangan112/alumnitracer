@@ -14,11 +14,13 @@ from django.contrib.auth import (
  
 from django.shortcuts import get_object_or_404
 GENDER = (
+    (' ', '--- SELECT ---'),
     ('Male', 'Male'),
     ('Female', 'Female')
 )
 
 YEAR = (
+    (' ', '--- SELECT ---'),
     ('1st', 'First Year'),
     ('2nd', 'Second Year'),
     ('3rd', 'Third Year'),
