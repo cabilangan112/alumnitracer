@@ -12,26 +12,26 @@ from alumni.models import PersonalInformation
 from django.views import generic
 from.models import User
 from django.urls import reverse	
-from .forms import UserLoginForm, UserRegisterForm,EditProfileForm,EditPasswordForm,PersonnelUserRegisterForm
+from .forms import UserLoginForm, UserRegisterForm,EditProfileForm,EditPasswordForm
 from django.contrib.auth.mixins import LoginRequiredMixin
  
 
 class ProfileView(LoginRequiredMixin,View):
- 
     def get(self, request,*args, **kwargs):
         query = self.request.GET.get('q')
-        user = User.objects.all()
+        prof = User.objects.all()
         qs = PersonalInformation.objects.all().order_by("-date_modified").search(query)
 
-        if user and qs.exists():
-            return render(request, "profile/profile_list.html",{'user':qs})
-        return render(request, "profile/profile_list.html",{'user':qs})
-
+        if prof and qs.exists():
+            return render(request, "profile/profile_list.html",{'prof':qs})
+        return render(request, "profile/profile_list.html",{'prof':qs})
 
 class ProfileDetailView(LoginRequiredMixin, View):
-    def get(self, request, email, *args, **kwargs):
-        user = get_object_or_404(User, email=email)
-        context = {'user':user,}
+    def get(self, request, user, *args, **kwargs):
+        alumni  = get_object_or_404(PersonalInformation, user=request.user)
+        context = {
+            'alumni':alumni
+        }
         return render(request, "profile/profile_detail.html", context)
 
 class LoginView(TemplateView):
@@ -48,7 +48,7 @@ class LoginView(TemplateView):
 		})
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self,  request, *args, **kwargs):
         context = self.get_context_data()
         form = context.get('form')
         if form.is_valid():
@@ -58,7 +58,7 @@ class LoginView(TemplateView):
                 return redirect('alumni:alumni-list')
             else:
                 login(self.request, user)
-                return redirect('user:detail', email=user.email)
+                return redirect('user:detail', user=user)
 
         return render(self.request, self.template_name, context)
 
@@ -89,15 +89,15 @@ class RegisterView(TemplateView):
 		return render(self.request, self.template_name, context)
 
                                      
-def  EditProfileView(request, pk):
-    user = get_object_or_404(User, pk=pk)
+def  EditProfileView(request, email):
+    user = get_object_or_404(User, email=email)
     if request.method == "POST":
         form = EditProfileForm(request.POST, instance=user)
         if form.is_valid():           
             user = form.save(commit=False)
             user.user = request.user
             user.save()
-        return redirect("/")
+        return redirect('user:detail', user=user)
     else:
         form = EditProfileForm(instance=user)
     return render(request, 'profile/profile-edit.html',{'form': form,

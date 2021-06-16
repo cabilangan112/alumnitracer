@@ -72,7 +72,7 @@ class PersonalInformation(models.Model):
     related_job                         = models.CharField(max_length = 3)
     number_year_company                 = models.CharField(max_length = 10)
     place_of_work                       = models.CharField(max_length = 6)
-    finish_graduate_degree              = models.CharField(max_length = 3)
+    finish_graduate_degree              = models.CharField(max_length = 200)
     reason_staying_job                  = models.TextField()
     designation                         = models.CharField(max_length = 255)
     department_division                 = models.CharField(max_length = 255)

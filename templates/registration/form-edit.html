@@ -1,0 +1,418 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Almni Tracer | Form</title>
+    {% include 'snippets/css.html'%}
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+      <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+        <link rel="stylesheet" href="{% static 'css/alumni.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  </head>
+ 
+ 
+<div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a href="#">Alumni Tracer | Detail </a>
+        <div id="close-sidebar">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="sidebar-header">
+      {% if user.is_authenticated %}
+        {% if request.user.is_staff %}
+        <div class="user-pic">
+          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ user.first_name}}
+            <strong> {{ user.last_name}}</strong>
+          </span>
+          <span class="user-role">Administrator</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>     
+            <span>Online</span>
+          </span>
+        </div>
+         {% else %}
+          <div class="user-pic">
+          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ user.first_name}}
+            <strong>{{ user.last_name}}</strong>
+          </span>         
+          <span class="user-role">Students</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>
+        </div>
+          {% endif %}
+        {% endif %}
+      </div>
+ 
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="{% url 'account:post' %}">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Alumni List</span>
+            </a>
+
+            <a href="#">
+              <i class="fa fa-tachometer-alt"></i>
+              <span> User </span> 
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="{% url "account:edit_profile" user.email %}">Edit Information  </a>
+                </li>
+                <li>
+                  <a href="#">Edit Employment Information</a>
+                </li>
+                <li>
+                  <a href="#">Change password </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+ 
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="far fa-gem"></i>
+              <span>Components</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">General</a>
+                </li>
+                <li>
+                  <a href="#">Panels</a>
+                </li>
+                <li>
+                  <a href="#">Tables</a>
+                </li>
+                <li>
+                  <a href="#">Icons</a>
+                </li>
+                <li>
+                  <a href="#">Forms</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-chart-line"></i>
+              <span>Charts</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Pie chart</a>
+                </li>
+                <li>
+                  <a href="#">Line chart</a>
+                </li>
+                <li>
+                  <a href="#">Bar chart</a>
+                </li>
+                <li>
+                  <a href="#">Histogram</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-globe"></i>
+              <span>Maps</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="#">Google maps</a>
+                </li>
+                <li>
+                  <a href="#">Open street map</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="header-menu">
+            <span>Extra</span>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-book"></i>
+              <span>Documentation</span>
+              <span class="badge badge-pill badge-primary">Beta</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-calendar"></i>
+              <span>Calendar</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-folder"></i>
+              <span>Examples</span>
+            </a>
+          </li>
+        </ul>
+    <div class="sidebar-footer">
+ 
+      <a href="#">
+        <i class="fa fa-cog"></i>
+        <span class="badge-sonar"></span>
+      </a>
+      <a href='{% url "logout" %}'>
+        <i class="fa fa-power-off"></i>
+      </a>
+    </div>
+    </div>
+  </div>
+  </nav>
+  <body>
+    <form method="post" ctype="multipart/form-data">
+    {% csrf_token %}
+      <!--  General -->
+      <div class="form-group">
+        <h2 class="heading">ALUMNI EDIT FORM</h2>
+        <div class="controls">
+          {{ form.user }}
+        </div>
+        <div class="grid">
+          <div class="col-2-3">
+            <div class="controls">
+              <span class="input-group-text bg-white px-4 border-md border-right-0">
+              <i class="fa fa-user text-muted">Civil_status : </i>
+              </span>
+              {{ form.civil_status}}
+            </div>          
+          </div>
+          <div class="col-1-3">
+            <div class="controls">
+              {{ form.age}}
+            </div>          
+          </div>
+        </div>
+        <div class="controls">
+          <span class="input-group-text bg-white px-4 border-md border-right-0">
+            <i class="fa fa-user text-muted">Date of Birth: </i>
+          </span>
+          {{ form.date_of_birth}}
+        </div>      
+        <div class="controls">
+          {{ form.mobile_number }}
+        </div>           
+        <div class="controls">
+          {{ form.a_street_adress }}
+        </div>          
+        <div class="controls">
+          {{ form.a_address_line_2 }}
+        </div> 
+        <div class="controls">
+          {{ form.a_city }}
+        </div>          
+        <div class="controls">
+          {{ form.a_state_province_region }}
+        </div> 
+        <div class="grid">
+          <div class="col-1-3">
+            <div class="controls">
+            {{ form.a_zip_code}}
+            </div>         
+          </div>
+          <div class="col-2-3">
+            <div class="controls">
+            {{ form.a_country }}
+            </div>         
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col-1-3">
+            <div class="controls">
+              {{ form.facebook_account}}
+            </div>         
+          </div>
+          <div class="col-2-3">
+            <div class="controls">
+              {{ form.twitter_account}}
+            </div>         
+          </div>
+          <div class="col-2-3">
+            <div class="controls">
+              {{ form.instagram_account}}
+            </div>         
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col-1-3">
+            <div class="controls">
+              <span class="input-group-text bg-white px-4 border-md border-right-0">
+                <i class="fa fa-user text-muted">Date Graduate: </i>
+              </span>
+              {{ form.date_graduated}}
+            </div>         
+          </div>
+          <div class="col-2-3">
+            <div class="controls">
+              {{ form.organization_or_employer}}
+            </div>         
+          </div>
+        </div>
+        <div class="controls">
+          {{ form.address_organization_or_employer}}
+        </div>
+        <div class="grid">
+          <div class="col-1-3">
+            <div class="controls">
+            {{ form.type_of_organization }}
+            </div>         
+          </div>
+          <div class="col-2-3">
+            <div class="controls">
+            {{ form.employment_type }}
+            </div>         
+          </div>
+        </div>  
+              <div class="controls">
+              {{ form.ccupational_classification }}
+              </div>     
+          <div class="grid">
+            <div class="col-2-3">
+              <div class="controls">
+              {{ form.related_job }}
+              </div>         
+            </div>
+            <div class="col-1-3">
+              <div class="controls">
+              {{ form.number_year_company   }}
+              </div>         
+            </div>
+          </div>  
+
+          <div class="grid">
+            <div class="col-1-3">
+              <div class="controls">
+              {{ form.place_of_work  }}
+              </div>         
+            </div>
+            <div class="col-2-3">
+              <div class="controls">
+              {{ form.finish_graduate_degree    }}
+              </div>         
+            </div>
+          </div>
+          <div class="controls">
+            <span class="input-group-text bg-white px-4 border-md border-right-0">
+              <i class="fa fa-user text-muted"> Reason for Staying job : </i>
+            </span>
+            {{ form.reason_staying_job  }}
+          </div>
+          <div class="controls">
+            {{ form.designation}}
+          </div> 
+          <div class="controls">
+            {{ form.department_division }}
+          </div> 
+          <div class="grid">
+            <div class="col-1-3">
+              <div class="controls">
+                {{ form.job_status  }}
+              </div>         
+            </div>
+            <div class="col-2-3">
+              <div class="controls">
+                {{ form.monthly_range_income }}
+              </div>         
+            </div>
+          </div>
+          <div class="controls">
+            {{ form.persuing_degree_ndmc }}
+          </div> 
+          <div class="controls">
+            {{ form.obtaining_degree_ndmc }}
+          </div> 
+          <div class="controls">
+            {{ form.current_job }}
+          </div> 
+          <div class="controls">
+            {{ form.first_employment  }}
+          </div> 
+          <div class="controls">
+            {{ form.work_related_course }}
+          </div>
+          <div class="controls">
+            {{ form.nature_of_employment }}
+          </div>
+          <div class="grid">
+            <div class="col-2-3">
+              <div class="controls">
+              {{ form.number_of_years   }}
+              </div>         
+            </div>
+            <div class="col-1-3">
+              <div class="controls">
+              {{ form.monthly_range_income }}
+              </div>         
+            </div>
+          </div>
+          <div class="controls">
+            {{ form.degree_program  }}
+          </div>
+          <div class="controls">
+            {{ form.monthly_income_range  }}
+          </div>
+          <div class="controls">
+            {{ form.pursuing_further_studies}}
+          </div>
+          <div class="controls">
+            {{ form.not_pursuing_further_studies}}
+          </div>
+          <div class="controls">
+            <span class="input-group-text bg-white px-4 border-md border-right-0">
+              <i class="fa fa-user text-muted"> Reason of Unemployed : </i>
+            </span>
+            {{ form.reason_of_unemployed }}
+          </div>
+        </div>
+      </div>
+      {% if form.errors %}
+      <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
+        {% for field in form %}
+          {{ field.errors }}
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="col-12">
+        <input type="submit" class="btnRegister"  value="{{ next }}Register"/>
+      </div>
+    </form>     
+  </body> 
+  <script src="{% static 'js/alumni.js' %}"></script>
+  {% include 'snippets/js.html' %}
+</html>
+{% endblock %}

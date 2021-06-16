@@ -45,11 +45,11 @@
             <span>Online</span>
           </span>
         </div>
-         {% else %}
-          <div class="user-pic">
+        {% else %}
+        <div class="user-pic"><a href="{% url "user:detail" user.email %}">
           <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-            alt="User picture">
-        </div>
+            alt="User picture"></a>
+       	</div>
         <div class="user-info">
           <span class="user-name">{{ user.first_name}}
             <strong>{{ user.last_name}}</strong>
@@ -87,49 +87,30 @@
             <span>General</span>
           </li>
           <li class="sidebar-dropdown">
+            <a href="{% url 'account:post' %}">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Alumni List</span>
+            </a>
+
             <a href="#">
               <i class="fa fa-tachometer-alt"></i>
-              <span>Dashboard</span>
-              <span class="badge badge-pill badge-warning">New</span>
+              <span> User </span> 
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">Dashboard 1
-                    <span class="badge badge-pill badge-success">Pro</span>
-                  </a>
+                  <a href="{% url "account:edit_profile" user.email %}">Edit Information  </a>
                 </li>
                 <li>
-                  <a href="#">Dashboard 2</a>
+                  <a href="{% url "alumni:edit-form" user.email  %}">Edit Employment Information</a>
                 </li>
                 <li>
-                  <a href="#">Dashboard 3</a>
+                  <a href="#">Change password </a>
                 </li>
               </ul>
             </div>
           </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-shopping-cart"></i>
-              <span>E-commerce</span>
-              <span class="badge badge-pill badge-danger">3</span>
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#">Products
-
-                  </a>
-                </li>
-                <li>
-                  <a href="#">Orders</a>
-                </li>
-                <li>
-                  <a href="#">Credit cart</a>
-                </li>
-              </ul>
-            </div>
-          </li>
+ 
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="far fa-gem"></i>
@@ -221,10 +202,7 @@
         <i class="fa fa-bell"></i>
         <span class="badge badge-pill badge-warning notification">3</span>
       </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
+ 
       <a href="#">
         <i class="fa fa-cog"></i>
         <span class="badge-sonar"></span>
@@ -250,7 +228,7 @@
   </div>
   <div class="player">
     {% if user %}
-      {% for qs in user %}
+      {% for qs in prof %}
         <div class="player-number" data-title="Number: ">{{qs.user.id_number }}</div>
         <div class="player-name" data-title="Name: "> 
         {{qs.user.last_name}} {{qs.user.first_name}} </div>

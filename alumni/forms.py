@@ -84,8 +84,8 @@ class PersonalInformationForm(forms.Form):
     job_status                  = forms.ChoiceField(choices=STATUS)
     monthly_range_income        = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder': 'Monthly Income Range *'}))
     persuing_degree_ndmc        = forms.ChoiceField(choices=COURSE_RELATED)
-    obtaining_degree_ndmc       = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'Obtaining  Degree in NDMC * '}))
-    current_job                 = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'Current Job * '}))
+    obtaining_degree_ndmc       = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'If not, how long did it take you to find a job after obtaining your degree from NDMC? * '}))
+    current_job                 = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'How did you come to know about your current job? * '}))
     first_employment            = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'First Employment * '}))
     work_related_course         = forms.ChoiceField(choices=COURSE_RELATED)
     nature_of_employment        = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'IN THE CASE OF SELF EMPLOYMENT, what is the Nature of Employment? '}))
@@ -202,3 +202,56 @@ class PersonalInformationForm(forms.Form):
             professors_knowledge     = data['professors_knowledge'],
             )
         personal.save()
+
+
+
+class PersonalEditForm(forms.ModelForm):
+    class Meta:
+        model = PersonalInformation
+        fields = [
+ 
+            'date_of_birth',
+            'civil_status',
+            'mobile_number',
+            'a_street_adress',                     
+            'a_address_line_2',                    
+            'a_city',                              
+            'a_state_province_region',
+            'a_zip_code',                          
+            'a_country',
+            'facebook_account',
+            'twitter_account',
+            'instagram_account',
+ 
+            'date_graduated',
+            'organization_or_employer',
+            'address_organization_or_employer',
+            'type_of_organization',
+            'employment_type',
+
+            'related_job',
+            'number_year_company',
+            'place_of_work',
+            'finish_graduate_degree',
+            'reason_staying_job',
+            'designation',
+            'department_division',
+            'job_status',
+            'monthly_range_income',
+            'persuing_degree_ndmc',
+            'obtaining_degree_ndmc',
+            'current_job',
+            'first_employment',
+            'work_related_course',
+            'nature_of_employment',
+            'number_of_years',
+            'monthly_income_range',               
+            'reason_of_unemployed',
+            'degree_program',
+            'pursuing_further_studies',     
+            'not_pursuing_further_studies',
+        ]
+
+
+
+

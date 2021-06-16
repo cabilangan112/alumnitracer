@@ -1,23 +1,124 @@
-{% load static from staticfiles %}
+ 
+{% load static %}
 <!DOCTYPE html>
-<html>
-<head>
-  <title>NDMC Archiving | Profile Form</title>
+<html lang=en>
+  <head> 
+  {% include 'snippets/css.html'%}
+  <title>NDMC Alumni Tracer | Registration</title>
+  <meta charset="utf-8">
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
-  <link rel="stylesheet" href="{% static 'css/return.css' %}">
-</head>
-{% block content %}
-{% include 'base.html'%}
-<body>
-  <div class="card"> 
-    <h2 class="head">Update Information</h2>
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{form.as_p}}
-      <input type="submit" class="btn btn-primary" value="Update">
-    </form>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <title>NDMC Alumni Tracer</title>
+  </head>
+  <body>
+    <div class="container register">
+      <div class="row reg">
+        <div class="col-md-3 register-left">
+          <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+          <h3>Welcome</h3>
+          <p>Welcome to Alumni Tracer</h3>
+          <p>Tracer studies can be defined
+as retrospective analyses of
+graduates through a standardised
+survey, which takes place some
+time after graduation (normally
+between 6 months and 3 years). </p>
+       
+        </div>
+        <div class="col-md-9 register-right">
+          <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Alumni</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Tracer</a>
+            </li>
+          </ul>
+          <form method="post" ctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h3 class="register-heading">Edit Information</h3>
+                <div class="row register-form">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                       <label class="mb-0">
+                        <h6 class="mb-0 text-sm">{{ form.id_number.label_tag }}</h6>
+                      </label>{{ form.id_number }}
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-0">
+                        <h6 class="mb-0 text-sm">{{ form.last_name.label_tag }}</h6>
+                      </label>{{ form.last_name }}
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-0">
+                        <h6 class="mb-0 text-sm">{{ form.middle_initial.label_tag }}</h6>
+                      </label>{{ form.middle_initial }}
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-1">
+                        <h6 class="mb-0 text-sm">{{ form.department.label_tag }}</h6>
+                      </label>{{ form.department}}
+                    </div>
+                   <div class="form-group">
+                    <label class="mb-1">
+                        <h6 class="mb-0 text-sm">{{ form.password1.label_tag }}</h6>
+                      </label>{{ form.password1}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="mb-0">
+                        <h6 class="mb-0 text-sm">{{ form.email.label_tag }}</h6>
+                      </label>{{ form.email }}
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-0">
+                        <h6 class="mb-0 text-sm">{{ form.first_name.label_tag }}</h6>
+                      </label>{{ form.first_name }}
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-0">
+                        <h6 class="mb-0 text-sm">{{ form.gender.label_tag }}</h6>
+                      </label>{{ form.gender }}
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-1">
+                        <h6 class="mb-0 text-sm">{{ form.course.label_tag }}</h6>
+                      </label>{{ form.course}}
+                    </div>
+                                      <div class="form-group">
+                    <label class="mb-1">
+                        <h6 class="mb-0 text-sm">{{ form.Year.label_tag }}</h6>
+                      </label>{{form.Year}}
+                    </div>
+ 
+                    {% block content %}
+                    {% if form.errors %}
+                    <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
+                      {% for field in form %}
+                        {{ field.errors }}
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                  {% endblock %}
+                  <input type="submit" class="btnRegister"  value="{{ next }}Save Changes"/>
+                </div>
+              </div>
+            </div>       
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-{% endblock %}
 </body>
-{% include 'footer.html'%}
 </html>
+{% include 'snippets/js.html' %}
+
+

@@ -61,24 +61,17 @@
           {% endif %}
         {% endif %}
       </div>
-      <div class="sidebar-search">
-        <div>
-          <div class="input-group">
-            <input type="text" class="form-control search-menu" placeholder="Search...">
-            <div class="input-group-append">
-              <span class="input-group-text">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+ 
       <div class="sidebar-menu">
         <ul>
           <li class="header-menu">
             <span>General</span>
           </li>
           <li class="sidebar-dropdown">
+          <a href="{% url 'alumni:alumni-list' %}">
+            <i class="fa fa-tachometer-alt"></i>
+            <span>Alumni List</span>
+            </a>   
             <a href="#">
               <i class="fa fa-tachometer-alt"></i>
               <span>Dashboard</span>
@@ -100,27 +93,7 @@
               </ul>
             </div>
           </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-shopping-cart"></i>
-              <span>E-commerce</span>
-              <span class="badge badge-pill badge-danger">3</span>
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#">Products
-                  </a>
-                </li>
-                <li>
-                  <a href="#">Orders</a>
-                </li>
-                <li>
-                  <a href="#">Credit cart</a>
-                </li>
-              </ul>
-            </div>
-          </li>
+ 
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="far fa-gem"></i>
@@ -212,10 +185,7 @@
         <i class="fa fa-bell"></i>
         <span class="badge badge-pill badge-warning notification">3</span>
       </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
+ 
       <a href="#">
         <i class="fa fa-cog"></i>
         <span class="badge-sonar"></span>
@@ -238,7 +208,7 @@
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                       <h4>{{alumni.user.first_name}} {{alumni.user.middle}} {{alumni.user.last_name}}</h4>
-                      <p class="text-secondary mb-1">Full Stack Developer</p>
+                      
                       <p class="text-muted font-size-sm">{{alumni.a_address_line_2 }}, {{ qs.a_city  }}</p>
                     </div>
                   </div>
@@ -252,11 +222,11 @@
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
-                    <span class="text-secondary">bootdey</span>
+                    <span class="text-secondary">{{alumni.instagram_account }}</span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
-                    <span class="text-secondary">bootdey</span>
+                    <span class="text-secondary">{{alumni.facebook_account }}</span>
                   </li>
                 </ul>
               </div>
@@ -398,7 +368,7 @@
                       <h6 class="mb-0">Is your current job related to the course you took up in College of I.T. & Engr. </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{alumni.user.first_name}} {{alumni.user.middle}} {{alumni.user.last_name}}
+                      {{alumni.related_job  }} 
                     </div>
                   </div>
                   <hr>
@@ -407,7 +377,7 @@
                       <h6 class="mb-0">Number of years in the company: :</h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.user.email}} 
+                      {{ alumni.number_year_company}} 
                     </div>
                   </div>
                   <hr>
@@ -416,7 +386,7 @@
                       <h6 class="mb-0">Place of work: </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.date_of_birth}}
+                      {{ alumni.place_of_work }}
                     </div>
                   </div>
                   <hr>
@@ -425,7 +395,7 @@
                       <h6 class="mb-0">Is this your first job after finishing your graduate degree : </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.date_of_birth}}
+                      {{ alumni.finish_graduate_degree }}
                     </div>
                   </div>
                   <hr>
@@ -435,16 +405,16 @@
                       </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.date_of_birth}}
+                      {{ alumni.reason_staying_job}}
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-5">
-                      <h6 class="mb-0">Place of work: </h6>
+                      <h6 class="mb-0">Designation : </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.date_of_birth}}
+                      {{ alumni.designation }}
                     </div>
                   </div>
                   <hr>
@@ -453,7 +423,16 @@
                       <h6 class="mb-0">Department/Division: </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.date_of_birth}}
+                      {{ alumni.department_division }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <h6 class="mb-0">Job Status:  </h6>
+                    </div>
+                    <div class="col-sm-5 text-secondary">
+                      {{ alumni.job_status }} 
                     </div>
                   </div>
                   <hr>
@@ -462,7 +441,7 @@
                       <h6 class="mb-0">Monthly Income Range:  </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.user.gender }} 
+                      {{ alumni.monthly_range_income }} 
                     </div>
                   </div>
                   <hr>
@@ -471,7 +450,7 @@
                       <h6 class="mb-0">Were you working while pursuing your degree at NDMC:</h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.user.gender }} 
+                      {{ alumni.persuing_degree_ndmc }} 
                     </div>
                   </div>
                   <hr>
@@ -480,7 +459,7 @@
                       <h6 class="mb-0">If not, how long did it take you to find a job after obtaining your degree from NDMC?:</h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.user.gender }} 
+                      {{ alumni.obtaining_degree_ndmc }} 
                     </div>
                   </div>
                   <hr>
@@ -489,7 +468,7 @@
                       <h6 class="mb-0">How did you come to know about your current job? Through friends, relatives, written enquiries or Advertisement in media?:  </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.user.gender }} 
+                      {{ alumni.current_job  }} 
                     </div>
                   </div>
                   <hr>
@@ -498,7 +477,7 @@
                       <h6 class="mb-0">IN THE CASE OF SELF EMPLOYMENT, what is the Nature of Employment?  </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.civil_status  }} 
+                      {{ alumni.nature_of_employment  }} 
                     </div>
                   </div>
                   <hr> 
@@ -507,7 +486,7 @@
                       <h6 class="mb-0">Number of Years: </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.age}} 
+                      {{ alumni.number_of_years}} 
                     </div>
                   </div>
                   <hr> 
@@ -516,7 +495,7 @@
                       <h6 class="mb-0">Monthly Income Range:</h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.age}} 
+                      {{ alumni.monthly_income_range }} 
                     </div>
                   </div>
                   <hr> 
@@ -525,16 +504,16 @@
                       <h6 class="mb-0">IN THE CASE OF UNEMPLOYED, Please state your reason(s) why you are unemployed: </h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{ alumni.age}} 
+                      {{ alumni.reason_of_unemployed   }} 
                     </div>
                   </div>
                   <hr> 
                   <div class="row">
                     <div class="col-sm-5">
-                      <h6 class="mb-0">IF PURSUING FURTHER STUDIES, <wbr>cdhat is the Degree Program and reasons for pursuing further studies?:/h6>
+                      <h6 class="mb-0">IF PURSUING FURTHER STUDIES, <wbr>what is the Degree Program and reasons for pursuing further studies?:/h6>
                     </div>
                     <div class="col-sm-5 text-secondary">
-                      {{alumni.mobile_number }}
+                      {{alumni.pursuing_further_studies  }}
                     </div>
                   </div>
                   <hr>
@@ -543,7 +522,7 @@
                       <h6 class="mb-0">IF NOT PURSUING FURTHER STUDIES, Please state your reason:</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{alumni.a_street_adress }}, {{alumni.a_address_line_2   }}, {{alumni.a_city }}
+                      {{alumni.not_pursuing_further_studies  }} 
                     </div>
                   </div>
                   <hr>
