@@ -7,8 +7,6 @@ from .utils import unique_slug_generator
 
 User = settings.AUTH_USER_MODEL
 
-# Create your models here.
-
 GENDER = (
     ('Male', 'Male'),
     ('Female', 'Female')
@@ -35,8 +33,6 @@ class PersonalQuerySet(models.query.QuerySet):
             return self.filter(
                 Q(user__last_name__icontains=query)|
                 Q(user__first_name__icontains=query)
- 
-
                 ).distinct()
         return self
  
@@ -49,7 +45,6 @@ class PersonalManager(models.Manager):
 
 class PersonalInformation(models.Model):
     user                                = models.ForeignKey(User, on_delete = models.CASCADE)
- 
     date_of_birth                       = models.CharField(max_length = 10)
     civil_status                        = models.CharField( max_length = 10, choices = CIVIL_STATUS)
     age                                 = models.CharField(max_length = 10)
@@ -63,7 +58,7 @@ class PersonalInformation(models.Model):
     facebook_account                    = models.CharField(max_length = 255)
     twitter_account                     = models.CharField(max_length = 255)
     instagram_account                   = models.CharField(max_length = 255)    
-    date_graduated                      = models.CharField(max_length = 10)
+ 
     organization_or_employer            = models.CharField(max_length = 255)
     address_organization_or_employer    = models.CharField(max_length = 255)
     type_of_organization                = models.CharField(max_length = 20)
@@ -116,9 +111,9 @@ class PersonalInformation(models.Model):
     teacher_student_relationships       = models.CharField(max_length = 20, choices = CHOICES )
     library_resources                   = models.CharField(max_length = 20, choices = CHOICES )
     laboratory_resources                = models.CharField(max_length = 20, choices = CHOICES )
-    class_size                          = models.CharField(max_length = 20, choices =CHOICES )
-    professors_pedagogical              = models.CharField(max_length = 20, choices =CHOICES )
-    professors_knowledge                = models.CharField(max_length = 20, choices =CHOICES )
+    class_size                          = models.CharField(max_length = 20, choices = CHOICES )
+    professors_pedagogical              = models.CharField(max_length = 20, choices = CHOICES )
+    professors_knowledge                = models.CharField(max_length = 20, choices = CHOICES )
  
     date_created                        = models.DateTimeField(auto_now_add = True)
     date_modified                       = models.DateTimeField(auto_now = True)
@@ -129,7 +124,6 @@ class PersonalInformation(models.Model):
     def __str__(self):
         return '{}'.format(self.user.last_name)
  
-
     @property
     def slug_title(self):
         return '{}'.format(self.user.last_name)

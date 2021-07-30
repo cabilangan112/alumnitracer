@@ -35,7 +35,6 @@ class ProfileDetailView(LoginRequiredMixin, View):
         return render(request, "profile/profile_detail.html", context)
 
 class LoginView(TemplateView):
-
     template_name = "registration/login.html"
  
     def get_context_data(self, *args, **kwargs):
@@ -58,7 +57,7 @@ class LoginView(TemplateView):
                 return redirect('alumni:alumni-list')
             else:
                 login(self.request, user)
-                return redirect('user:detail', user=user)
+                return redirect('user:post')
 
         return render(self.request, self.template_name, context)
 

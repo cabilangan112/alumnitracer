@@ -223,7 +223,6 @@ class PersonalEditForm(forms.ModelForm):
             'twitter_account',
             'instagram_account',
  
-            'date_graduated',
             'organization_or_employer',
             'address_organization_or_employer',
             'type_of_organization',

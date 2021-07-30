@@ -15,14 +15,7 @@ GENDER = (
     ('Female', 'Female')
 )
 
-YEAR = (
-    ('1st', 'Firs Year'),
-    ('2nd', 'Second Year'),
-    ('3rd', 'Third Year'),
-    ('4th', 'Fourth Year'),
-    ('5th', 'Fifth Year'),
-    ('Personnel', 'Personnel'),
-)
+
 class Course(models.Model):
     course_code        = models.CharField(max_length=100)
     course_description = models.CharField(max_length=100, null=True) 
@@ -60,15 +53,15 @@ class User(AbstractBaseUser):
     """ user model
     """
     email        = models.EmailField(max_length=500, unique=True)
+    image        = models.FileField(upload_to="profile", null=True)    
     id_number    = models.CharField(max_length=80)
     first_name   = models.CharField(max_length=80)
     last_name    = models.CharField(max_length=80)
     middle_initial = models.CharField(max_length=80)
-    gender       = models.CharField(max_length = 6, choices = GENDER)
+    sex          = models.CharField(max_length = 6, choices = GENDER)
     course       = models.ForeignKey(Course, null=True, blank=True, on_delete = models.CASCADE)
-    Year         = models.CharField(max_length=30, choices=YEAR, blank=True, default=True)
     department   = models.ForeignKey(Department, null=True, blank=True, on_delete = models.CASCADE)
-
+    date_graduated = models.CharField(max_length = 10)
     Faculty 	 = models.BooleanField(default=False)
     Program_head = models.BooleanField(default=False)
     Dean         = models.BooleanField(default=False)

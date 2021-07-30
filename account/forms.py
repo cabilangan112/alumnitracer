@@ -19,14 +19,7 @@ GENDER = (
     ('Female', 'Female')
 )
 
-YEAR = (
-    (' ', '--- SELECT ---'),
-    ('1st', 'First Year'),
-    ('2nd', 'Second Year'),
-    ('3rd', 'Third Year'),
-    ('4rt', 'Fourth Year'),
-    ('5th', 'Fifth Year')
-)
+ 
 class UserLoginForm(forms.Form):
     """login page"""
     email    = forms.EmailField(label='Email Address',widget=forms.TextInput(attrs={'placeholder': 'Email Address'}))
@@ -61,18 +54,16 @@ class UserLoginForm(forms.Form):
         return super(UserLoginForm, self).clean(*args, **kwargs)
         
 class UserRegisterForm(forms.Form):
-    """
-    The form for the register page
-    """
+ 
     email      = forms.EmailField(label='Email Address',widget=forms.TextInput(attrs={'placeholder': 'Email Address'}))
     id_number  = forms.CharField(max_length=10,widget=forms.TextInput(attrs={'placeholder': 'Student ID'}))
     first_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Firstname'}))
     last_name  = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Lastname'}))
     middle_initial  = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Middle Initial'}))
-    gender       = forms.ChoiceField(choices = GENDER)
+    sex        = forms.ChoiceField(choices = GENDER)
     course     = forms.ModelChoiceField(queryset=Course.objects.all())
     department = forms.ModelChoiceField(queryset=Department.objects.all())
-    Year       = forms.ChoiceField(choices=YEAR)
+    date_graduated   = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     password1 = forms.CharField(label='Password',min_length=8, widget=forms.PasswordInput(attrs={'placeholder': 'Must be at 8 characters'}), validators=[RegexValidator('^(\w+\d+|\d+\w+)+$', message="Password should be a combination of Alphabets and Numbers")])
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={'placeholder': 'Must be at 8 characters'}))
     
@@ -85,9 +76,10 @@ class UserRegisterForm(forms.Form):
             first_name = data['first_name'],
             last_name  = data['last_name'],
             middle_initial  = data['middle_initial'],
+            sex     = data['sex'], 
             course     = data['course'], 
-            Year       = data['Year'],
             department = data['department'],
+            date_graduated      = data['date_graduated'],
 
         )
         user.set_password(self.cleaned_data["password1"])
@@ -111,13 +103,6 @@ class UserRegisterForm(forms.Form):
 
         return email
 
-    def clean_id_number(self):
-        id_number    = self.data.get('id_number')
-        id_number_qs = User.objects.filter(id_number=id_number)
-        if id_number_qs.exists():
-            raise forms.ValidationError("This Id Number has already been used")
-        return id_number
-
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -128,10 +113,7 @@ class UserRegisterForm(forms.Form):
 
 
 class EditPasswordForm(forms.Form):
-    """
-    Form for the currently logged in user if he/she wants to edit
-    his/her password
-    """
+ 
     password  = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2  = forms.CharField(label="Confirm Password", widget=forms.PasswordInput)
 
