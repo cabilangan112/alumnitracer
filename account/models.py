@@ -66,9 +66,8 @@ class User(AbstractBaseUser):
     Program_head = models.BooleanField(default=False)
     Dean         = models.BooleanField(default=False)
     is_staff     = models.BooleanField(default=False)
-    Students     = models.BooleanField(default=False)
-    quality_assurance = models.BooleanField(default=False)
     is_active 	 = models.BooleanField(default=True)
+    agree_terms  = models.BooleanField(default=False)
 
     date_joined  = models.DateTimeField(auto_now_add=True) 
     date_updated = models.DateTimeField(auto_now=True)

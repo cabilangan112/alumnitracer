@@ -68,7 +68,7 @@ class PersonalInformationForm(forms.Form):
     facebook_account =  forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder': 'Facebook Account*'}))
     twitter_account  =  forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder': 'Twitter Acount *'}))
     instagram_account  =  forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder': 'Instagram Acount *'}))    
-    date_graduated   = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    
     organization_or_employer =  forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'Name of Organization/Employer * '}))
     address_organization_or_employer =  forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Address of Organization/Employe * '}))
     type_of_organization        =  forms.ChoiceField(choices=ORGANIZATION )
@@ -133,6 +133,7 @@ class PersonalInformationForm(forms.Form):
             user = data['user'],
             date_of_birth       = data['date_of_birth'],
             civil_status        = data['civil_status'],
+            age                 = data['age'],
 
             mobile_number       = data['mobile_number'],
             a_street_adress     = data['a_street_adress'],                     
@@ -144,7 +145,7 @@ class PersonalInformationForm(forms.Form):
             facebook_account    = data['facebook_account'],
             twitter_account     = data['twitter_account'],
             instagram_account     = data['instagram_account'],
-            date_graduated      = data['date_graduated'],
+            
             organization_or_employer = data['organization_or_employer'],
             address_organization_or_employer = data['address_organization_or_employer'],
             type_of_organization = data['type_of_organization'],

@@ -6,27 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import PersonalInformation
 from account.decorators import user_required, staff_required
 from .forms import PersonalInformationForm,PersonalEditForm
-# Create your views here.
-
-
-
-class AlumniAdminView(LoginRequiredMixin, View):
-    def get(self, request,*args, **kwargs):
-        query = self.request.GET.get('q')
-        qs = PersonalInformation.objects.all().order_by("-date_modified").search(query)
-
-        if qs.exists():
-            return render(request, "alumni/alumni_list.html",{'qs':qs,})
-        return render(request, "alumni/alumni_list.html",{'qs':qs,})
  
-class AlumniAdminDetailView(LoginRequiredMixin, View):
-    def get(self, request, pk, *args, **kwargs):
-        alumni = get_object_or_404(PersonalInformation, pk=pk)
-        context = {
-            'alumni':alumni
-        }
-        return render(request, 'alumni/alumni_detail.html', context)
-
  
 class PersonalInfoCreateView(TemplateView):
     """
@@ -50,7 +30,7 @@ class PersonalInfoCreateView(TemplateView):
         form = context.get('form')
         if form.is_valid():
             user = form.save()
-            return redirect('/')
+            return redirect('account:post')
         return render(self.request, self.template_name, context)
                      
 def  EditformView(request, user):

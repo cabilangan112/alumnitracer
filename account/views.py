@@ -12,23 +12,30 @@ from alumni.models import PersonalInformation
 from django.views import generic
 from.models import User
 from django.urls import reverse	
-from .forms import UserLoginForm, UserRegisterForm,EditProfileForm,EditPasswordForm
+from .forms import UserLoginForm,UploadForm, UserRegisterForm,EditProfileForm,EditPasswordForm
 from django.contrib.auth.mixins import LoginRequiredMixin
  
 
 class ProfileView(LoginRequiredMixin,View):
     def get(self, request,*args, **kwargs):
         query = self.request.GET.get('q')
-        prof = User.objects.all()
         qs = PersonalInformation.objects.all().order_by("-date_modified").search(query)
 
-        if prof and qs.exists():
-            return render(request, "profile/profile_list.html",{'prof':qs})
-        return render(request, "profile/profile_list.html",{'prof':qs})
+        if qs.exists():
+            return render(request, "profile/profile_list.html",{'qs':qs})
+        return render(request, "profile/profile_list.html",{'qs':qs})
 
-class ProfileDetailView(LoginRequiredMixin, View):
+class UserDetailView(LoginRequiredMixin, View):
     def get(self, request, user, *args, **kwargs):
         alumni  = get_object_or_404(PersonalInformation, user=request.user)
+        context = {
+            'alumni':alumni
+        }
+        return render(request, "profile/profile_detail.html", context)
+
+class ProfileDetailView(LoginRequiredMixin, View):
+    def get(self, request, pk, *args, **kwargs):
+        alumni  = get_object_or_404(PersonalInformation, pk=pk)
         context = {
             'alumni':alumni
         }
@@ -53,11 +60,7 @@ class LoginView(TemplateView):
         if form.is_valid():
             user = form.save()
             login(self.request, user)
-            if self.request.user.is_authenticated and request.user.is_staff:
-                return redirect('alumni:alumni-list')
-            else:
-                login(self.request, user)
-                return redirect('user:post')
+            return redirect('user:post')
 
         return render(self.request, self.template_name, context)
 
@@ -87,20 +90,35 @@ class RegisterView(TemplateView):
 			return redirect('alumni:personal-form', email=user.email)
 		return render(self.request, self.template_name, context)
 
-                                     
+
 def  EditProfileView(request, email):
     user = get_object_or_404(User, email=email)
     if request.method == "POST":
-        form = EditProfileForm(request.POST, instance=user)
+        form = EditProfileForm(request.POST or None, instance=user)
         if form.is_valid():           
-            user = form.save(commit=False)
-            user.user = request.user
+            user = form.save(commit=False) 
             user.save()
-        return redirect('user:detail', user=user)
+            return redirect('user:user-detail', user=user)
     else:
         form = EditProfileForm(instance=user)
     return render(request, 'profile/profile-edit.html',{'form': form,
         'user':user})
+
+
+def UploadView(request, email):
+    user = get_object_or_404(User, email=email)
+    if request.method == "POST":
+        form = UploadForm(request.POST,request.FILES, instance=user )
+        if form.is_valid():           
+            user = form.save(commit=False) 
+            user.user = request.user
+            user.save()
+            return redirect('account:post')
+    else:
+        form = UploadForm(instance=user)
+    return render(request, 'profile/upload.html',{'form': form,
+        'user':user})
+
 
 class EditPassword(LoginRequiredMixin, generic.TemplateView):
     """

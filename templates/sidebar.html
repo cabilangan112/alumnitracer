@@ -66,123 +66,138 @@
           </div>
         </div>
         <div class="sidebar-menu">
-          <ul>
-            <li class="header-menu">
-              <span>General</span>
-            </li>
-            <li class="sidebar-dropdown">
-              <a href="{% url 'alumni:alumni-list' %}">
-                <i class="fa fa-tachometer-alt"></i>
-                <span>Alumni List</span>
-              </a>            
-              <a href="#">
-                <i class="fa fa-tachometer-alt"></i>
-                <span>User</span>
- 
-              </a>
-              <div class="sidebar-submenu">
-                <ul>
-                  <li>
-                    <a href="{% url 'account:detail' user.email %}">{{ user.email}}</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'account:edit_profile' user.email %}">Edit Information  </a>
-                  </li>
-                  <li>
-                    <a href="{% url 'alumni:edit-form' user.pk %}">Edit Employment Information</a>
-                  </li>
-                  <li>
-                    <a href="#">Change password </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li class="sidebar-dropdown">
-              <a href="#">
-                <i class="far fa-gem"></i>
+          {% if user.is_authenticated %}
+            {% if request.user.is_staff %}
+            <ul>
+              <li class="header-menu">
+                <span>General</span>
+              </li>
+              <li class="sidebar-dropdown">
+                <a href="{% url 'account:post' %}">
+                  <i class="fa fa-tachometer-alt"></i>
+                  <span>Alumni List</span>
+                </a>   
+                <a href="">
+                  <i class="fa fa-tachometer-alt"></i>
+                  <span>Department List</span>
+                </a>  
+                <a href="">
+                  <i class="fa fa-tachometer-alt"></i>
+                  <span>Course List</span>
+                </a>     
+                
+              <li class="header-menu">
                 <span>Components</span>
-              </a>
-              <div class="sidebar-submenu">
-                <ul>
-                  <li>
-                    <a href="#">Add Course</a>
-                  </li>
-                  <li>
-                    <a href="#">Add Department</a>
-                  </li>
-                  <li>
-                    <a href="#">Add User</a>
-                  </li>
-                  <li>
-                    <a href="#">Add Personel</a>
-                  </li>
-                  <li>
-                    <a href="#">Forms</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li class="sidebar-dropdown">
-              <a href="#">
-                <i class="fa fa-chart-line"></i>
-                <span>Charts</span>
-              </a>
-              <div class="sidebar-submenu">
-                <ul>
-                  <li>
-                    <a href="#">Pie chart</a>
-                  </li>
-                  <li>
-                    <a href="#">Line chart</a>
-                  </li>
-                  <li>
-                    <a href="#">Bar chart</a>
-                  </li>
-                  <li>
-                    <a href="#">Histogram</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li class="sidebar-dropdown">
-              <a href="#">
-                <i class="fa fa-globe"></i>
-                <span>Maps</span>
-              </a>
-              <div class="sidebar-submenu">
-                <ul>
-                  <li>
-                    <a href="#">Google maps</a>
-                  </li>
-                  <li>
-                    <a href="#">Open street map</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li class="header-menu">
-              <span>Extra</span>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-book"></i>
-                <span>Documentation</span>
-                <span class="badge badge-pill badge-primary">Beta</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-calendar"></i>
-                <span>Calendar</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-folder"></i>
-                <span>Examples</span>
-              </a>
-            </li>
-          </ul>
+              </li>
+              <li class="sidebar-dropdown">
+                <a href="{% url 'alumni:create-form' %}">
+                  <i class="fa fa-chart-line"></i>
+                  <span> Add Alumni Information</span>
+                </a>
+              </li>
+              <li class="sidebar-dropdown">       
+                <a href="#">
+                  <i class="fa fa-tachometer-alt"></i>
+                  <span>User</span>
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a href="">Add User </a>
+                    </li>
+                    <li>
+                      <a href="">Add Course</a>
+                    </li>
+                    <li>
+                      <a href="">Add Department </a>
+                    </li>
+                  </ul>
+                </div>
+              </li> 
+              </li>
+              <li class="header-menu">
+                <span>Extra</span>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-book"></i>
+                  <span>Chat List</span>
+                  <span class="badge badge-pill badge-primary">Beta</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-calendar"></i>
+                  <span>Calendar</span>
+                </a>
+              </li>
+            </ul>
+            {% else %}
+            <ul>
+              <li class="header-menu">
+                <span>General</span>
+              </li>
+              <li class="sidebar-dropdown">
+                <a href="{% url 'account:user-detail' user.email %} ">
+                  <i class="fa fa-tachometer-alt"></i>
+                  <span>{{ user.email}}</span>
+                </a>            
+                <a href="{% url 'account:upload' user.email %}">
+                  <i class="fa fa-tachometer-alt"></i>
+                  <span>Upload Profile</span>
+                </a> 
+              </li>
+              <li class="header-menu">
+                <span>Components</span>
+              </li>
+              <li class="sidebar-dropdown">
+                <a href="{% url 'account:post' %}">
+                  <i class="fa fa-tachometer-alt"></i>
+                  <span>Alumni List</span>
+                </a> 
+                <a href="#">
+                  <i class="fa fa-tachometer-alt"></i>
+                  <span>User</span>
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a href="{% url 'account:edit_profile' user.email %}">Edit Information  </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'alumni:edit-form' user.pk %}">Edit Employment Information</a>
+                    </li>
+                    <li>
+                      <a href="#">Change password </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="header-menu">
+                <span>Extra</span>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-book"></i>
+                  <span>Documentation</span>
+                  <span class="badge badge-pill badge-primary">Beta</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-calendar"></i>
+                  <span>Calendar</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="fa fa-folder"></i>
+                  <span>Examples</span>
+                </a>
+              </li>
+            </ul>
+            {% endif %}
+          {% endif %}
           <div class="sidebar-footer">
             <a href="#">
               <i class="fa fa-bell"></i>

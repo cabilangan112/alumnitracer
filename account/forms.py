@@ -66,7 +66,10 @@ class UserRegisterForm(forms.Form):
     date_graduated   = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     password1 = forms.CharField(label='Password',min_length=8, widget=forms.PasswordInput(attrs={'placeholder': 'Must be at 8 characters'}), validators=[RegexValidator('^(\w+\d+|\d+\w+)+$', message="Password should be a combination of Alphabets and Numbers")])
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={'placeholder': 'Must be at 8 characters'}))
-    
+    agree_terms = forms.BooleanField(
+        required=False,
+        label='Agree terms and condition ',
+        widget=forms.CheckboxInput())
     def save(self):
         data = self.cleaned_data
 
@@ -80,6 +83,7 @@ class UserRegisterForm(forms.Form):
             course     = data['course'], 
             department = data['department'],
             date_graduated      = data['date_graduated'],
+            agree_terms = data['agree_terms']
 
         )
         user.set_password(self.cleaned_data["password1"])
@@ -135,4 +139,22 @@ class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = "__all__"
+        fields = [
+            'email',
+            'id_number',
+            'first_name',
+            'last_name',
+            'course',
+            'middle_initial',
+            'department',
+            ]
+
+class UploadForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+ 
+        fields = [
+            'image',
+
+            ]

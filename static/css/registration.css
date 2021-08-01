@@ -109,11 +109,4 @@ textarea {
     letter-spacing: 1px;
 }
 
-input:focus,
-textarea:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid #304FFE;
-    outline-width: 0;
-}
+ 

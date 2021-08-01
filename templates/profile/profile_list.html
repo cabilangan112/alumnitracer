@@ -25,25 +25,27 @@
         <div class="player-value">Department</div>
         <div class="player-stats">Course</div>
       </div>
-      {% if user %}
-        {% for qs in prof %}
-          <div class="player">
-            <div class="player-number" data-title="Number: ">{{qs.user.id_number }}</div>
-            <div class="player-name" data-title="Name: "> 
-            {{qs.user.last_name}} {{qs.user.first_name}} </div>
-            <div class="player-city" data-title="City: ">{{qs.a_street_adress }}, {{qs.a_address_line_2 }} {{qs.a_city}}</div>
-            <div class="player-country" data-title="Country: ">{{qs.user.date_graduated}}</div>
-            <div class="player-value" data-title="Value: ">{{qs.user.department }}</div>
-            <div class="player-stats" data-title="Stats: ">1{{qs.user.course }}</div>
-          </div>
+      {% if qs %}
+        {% for qs in qs %}
+          {% if qs.user.agree_terms %}
+            <div class="player">
+              <div class="player-number">  {{qs.user.id_number }}</div>
+              <div class="player-name" data-title="Name: "> <a href="{% url 'account:detail' qs.pk %}">
+              {{qs.user.last_name}} {{qs.user.first_name}} </a></div>
+              <div class="player-city" data-title="City: ">{{qs.a_street_adress }}, {{qs.a_address_line_2 }} {{qs.a_city}}</div>
+              <div class="player-country" data-title="Country: ">{{qs.user.date_graduated}}</div>
+              <div class="player-value" data-title="Value: ">{{qs.user.department }}</div>
+              <div class="player-stats" data-title="Stats: ">{{qs.user.course }}</div>
+            </div>
+          {% endif %}
         {% endfor %}
       {% else %}
         <p>Empty</p>
       {% endif %}                
     </div>
-  </body>
+  </body>l
   <script src="{% static 'js/alumni.js' %}"></script>
- 
+
   {% include 'snippets/js.html' %}
 </html>
  

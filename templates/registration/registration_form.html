@@ -105,6 +105,11 @@
                         <h6 class="mb-0 text-sm">{{ form.password2.label_tag }}</h6>
                       </label>{{ form.password2}}
                     </div>
+                    <div class="form-group">
+                      <label class="mb-1">
+                        <h6 class="mb-0 text-sm">{{ form.agree_terms.label_tag }}</h6>
+                      </label>{{ form.agree_terms}}
+                    </div>
                     {% block content %}
                     {% if form.errors %}
                     <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
