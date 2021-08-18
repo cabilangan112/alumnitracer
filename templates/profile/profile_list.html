@@ -34,8 +34,8 @@
               {{qs.user.last_name}} {{qs.user.first_name}} </a></div>
               <div class="player-city" data-title="City: ">{{qs.a_street_adress }}, {{qs.a_address_line_2 }} {{qs.a_city}}</div>
               <div class="player-country" data-title="Country: ">{{qs.user.date_graduated}}</div>
-              <div class="player-value" data-title="Value: ">{{qs.user.department }}</div>
-              <div class="player-stats" data-title="Stats: ">{{qs.user.course }}</div>
+              <div class="player-value" data-title="Value: ">{{qs.user.department.department_code }}</div>
+              <div class="player-stats" data-title="Stats: ">{{qs.user.course.course_code }}</div>
             </div>
           {% endif %}
         {% endfor %}

@@ -23,11 +23,11 @@ class Course(models.Model):
     date_modified      = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return '{}'.format(self.course_code)
+        return '{}'.format(self.course_description)
 
     @property
     def slug_title(self):
-        return '{}'.format(self.course_code )   
+        return '{}'.format(self.course_description)   
 
     class Meta:
         ordering = ['-date_created']
@@ -40,11 +40,11 @@ class Department(models.Model):
     slug                   = models.SlugField(null=True, blank=True)
 
     def __str__(self):
-        return '{}'.format(self.department_code)
+        return '{}'.format(self.department_description)
         
     @property
     def slug_title(self):
-        return '{}'.format(self.department_code)   
+        return '{}'.format(self.department_description)   
 
     class Meta:
         ordering = ['-date_created']

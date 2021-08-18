@@ -41,7 +41,7 @@ def  EditformView(request, user):
             user = form.save(commit=False)
             user.user = request.user
             user.save()
-        return redirect("/")
+        return redirect('account:post')
     else:
         form = PersonalEditForm(instance=prof )
     return render(request, 'registration/form-edit.html',{'form': form,'prof':prof})

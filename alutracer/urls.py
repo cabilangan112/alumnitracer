@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('account/', include('account.urls', namespace='user')),
     path('alumni/', include('alumni.urls', namespace='alumni')),
+    path('chat/', include('chat.urls', namespace='chat')),
     path('register/',RegisterView.as_view(), name='register'),
 ]
 urlpatterns.extend(

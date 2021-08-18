@@ -144,9 +144,12 @@ class EditProfileForm(forms.ModelForm):
             'id_number',
             'first_name',
             'last_name',
+            'sex',
+            'date_graduated',
             'course',
             'middle_initial',
             'department',
+            'agree_terms',
             ]
 
 class UploadForm(forms.ModelForm):
