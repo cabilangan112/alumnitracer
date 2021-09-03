@@ -1,0 +1,99 @@
+body {
+  font-family: 'Arial';
+  font-size: 12px;
+  color: #606060;
+
+}
+* {
+  box-sizing: border-box;
+}
+.overalll {
+  width: 60%;
+  height: 100%;
+  margin: 20px;
+  margin-left: 350px;
+  top: 0px;
+
+}
+.chatcontainer {
+  display: flex;
+  height: 80px;
+  width: 100%;
+  position: relative;
+  border-radius: 2px;
+  padding: 10px;
+  margin: 15px 0;
+  background-color: #f0f0f0;
+  box-shadow: 0 1px 3px 0 #707070, 0 1px 1px 0 #adadad;
+  transition: box-shadow 0.15s ease-in-out;
+}
+.chatcontainer:hover {
+  box-shadow: 0 5px 10px 0 #757575, 0 4px 5px 0 #a8a8a8;
+}
+.chatcontainer:active {
+  background-color: #e0e0e0;
+}
+.chatcontainer .photo {
+  display: block;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  border-radius: 30px;
+  border: 1px solid #eaeaea;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+.chatcontainer .chattext {
+  flex: 1;
+  height: 60px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.chatcontainer .chattext .status {
+  position: absolute;
+  top: 10px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+.chatcontainer .chattext .status.-online {
+  background-color: #37d316;
+}
+.chatcontainer .chattext .status.-offline {
+  border: 1px solid #adadad;
+}
+.chatcontainer .chattext .chatname {
+  position: absolute;
+  top: 5px;
+  left: 17px;
+  color: #000;
+  font-size: 1.5em;
+}
+.chatcontainer .chattext .chatmessage {
+  top: 35px;
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  line-height: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chatcontainer .chattext .chatmessage.-unread {
+  font-weight: bold;
+}
+.chatcontainer .connection {
+  height: 60px;
+  width: 60px;
+  text-align: center;
+  position: relative;
+}
+.chatcontainer .connection .time {
+  position: absolute;
+  top: 35px;
+}

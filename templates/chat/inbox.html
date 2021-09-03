@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  {% block content %}
+  <head>
+    {% include 'snippets/css.html'%}
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inbox.css' %}">
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+ {% include 'sidebar.html'%}
+  <body>
+    <div class="overalll">
+       {% include 'snippets/chat_nav.html'%}
+      {% if message_list %}
+        {% for message in message_list %}    
+          <div class="chatcontainer">
+            <a class="photo" style="background-image: url(https://graph.facebook.com/100006582316470/picture?width=130&amp;height=130)"></a>
+            <div class="chattext">
+              <div class="status -online" title="User is online!"></div>
+            {% for msg in message.User_set.all %} 
+            {{ msg.last_name}}
+                  {% endfor %}    
+              {% if message.new %}<strong>
+              <div class="chatname">{{ message.sender.last_name }}</div>
+              <div class="chatmessage">{{ message.subject }}</div>
+              <td>{% endif %}
+              <strong><em>{% if message.replied %}</em>{% endif %}
+              {% if message.new %}</strong>{% endif %}</td>
+            </div>
+            <div class="connection">
+              <div class="time">10:39 PM</div>
+            </div>
+          </div>
+        {% endfor %} 
+      {% endif %}
+    </div>
+  </body>
+  <script src="{% static 'js/alumni.js' %}"></script>
+    {% endblock %}
+</html>
