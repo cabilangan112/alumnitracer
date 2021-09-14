@@ -9,7 +9,20 @@ from django.db.models import signals
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from account.models import User
+from django.db.models import Q
 
+class MailQuerySet(models.query.QuerySet): 
+    def search(self,query): 
+        if query:
+            query = query.strip()
+            return self.filter(
+                Q(sender__last_name__icontains=query)|
+                Q(sender__first_name__icontains=query)|
+                Q(subject__icontains=query)|
+                Q(sent_at__icontains=query)
+
+                ).distinct()
+        return self
 
 class MessageManager(models.Manager):
 
@@ -37,12 +50,17 @@ class MessageManager(models.Manager):
             sender_deleted_at__isnull=False,
         )
 
- 
+    def get_queryset(self):
+        return MailQuerySet(self.model, using=self._db)
+
+    def search(self, query):
+        return self.get_queryset().search(query)
+
 class Message(models.Model):
 
     subject = models.CharField(_("Subject"), max_length=140)
     body = models.TextField(_("Body"))
-    sender = models.ForeignKey(User, related_name='sent_messages', verbose_name=_("Sender"), on_delete=models.PROTECT)
+    sender = models.ForeignKey(User, related_name='sent_messages', verbose_name=_("Sender"), on_delete = models.CASCADE)
     recipient = models.ForeignKey(User, related_name='received_messages', null=True, blank=True, verbose_name=_("Recipient"), on_delete=models.SET_NULL)
     parent_msg = models.ForeignKey('self', related_name='next_messages', null=True, blank=True, verbose_name=_("Parent message"), on_delete=models.SET_NULL)
     sent_at = models.DateTimeField(_("sent at"), null=True, blank=True)

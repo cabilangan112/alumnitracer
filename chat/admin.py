@@ -12,9 +12,12 @@ if "pinax.notifications" in settings.INSTALLED_APPS and getattr(settings, 'DJANG
     from pinax.notifications import models as notification
 else:
     notification = None
-
+ 
 
 class MessageAdminForm(forms.ModelForm):
+    """
+    Custom AdminForm to enable messages to groups and all users.
+    """
     group = forms.ChoiceField(label=_('group'), required=False,
         help_text=_('Creates the message optionally for all users or a group of users.'))
 
@@ -63,10 +66,18 @@ class MessageAdmin(admin.ModelAdmin):
     raw_id_fields = ('sender', 'recipient', 'parent_msg')
 
     def save_model(self, request, obj, form, change):
+        """
+        Saves the message for the recipient and looks in the form instance
+        for other possible recipients. Prevents duplication by excludin the
+        original recipient from the list of optional recipients.
+
+        When changing an existing message and choosing optional recipients,
+        the message is effectively resent to those users.
+        """
         obj.save()
 
         if notification:
- 
+            # Getting the appropriate notice labels for the sender and recipients.
             if obj.parent_msg is None:
                 sender_label = 'messages_sent'
                 recipients_label = 'messages_received'

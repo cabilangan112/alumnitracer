@@ -10,7 +10,7 @@ try:
 except ImportError:
     from django.urls import reverse
 from django.conf import settings
-
+from django.views.generic.detail import DetailView
 from .models import Message
 from .forms import ComposeForm
 from .utils import format_quote, get_user_model, get_username_field
@@ -26,10 +26,12 @@ else:
 
 @login_required
 def inbox(request, template_name='chat/inbox.html'):
-    message_list = Message.objects.inbox_for(request.user)
-    return render(request, template_name, {
-        'message_list': message_list,
-    })
+    query = request.GET.get('q')
+    message_list = Message.objects.inbox_for(request.user).search(query)
+
+    if message_list.exists():
+        return render(request, template_name, {'message_list': message_list,})
+    return render(request, template_name, {'message_list': message_list,})
 
 @login_required
 def outbox(request, template_name='chat/outbox.html'):
@@ -71,12 +73,12 @@ def compose(request, recipient=None, form_class=ComposeForm,
     })
 
 @login_required
-def reply(request, message_id, form_class=ComposeForm,
+def reply(request, sender_id, form_class=ComposeForm,
         template_name='chat/compose.html', success_url=None,
         recipient_filter=None, quote_helper=format_quote,
         subject_template=_(u"Re: %(subject)s"),):
 
-    parent = get_object_or_404(Message, id=message_id)
+    parent = get_object_or_404(Message, sender_id=sender_id)
 
     if parent.sender != request.user and parent.recipient != request.user:
         raise Http404
@@ -171,23 +173,4 @@ def view(request, message_id, form_class=ComposeForm, quote_helper=format_quote,
         context['reply_form'] = form
     return render(request, template_name, context)
 
-class Inbox(View):
-    def get(self, request,*args, **kwargs):
-        query = self.request.GET.get('q')
-        message_list = Message.objects.inbox_for(request.user)
  
-
-        if message_list.exists():
-            return render(request, "chat/inbox.html",{'message_list':message_list})
-        return render(request, "chat/inbox.html",{'message_list':message_list})
-
-class Inbox1(View):
-    def get(self, request,*args, **kwargs):
-        query = self.request.GET.get('q')
-        message_list = User.objects.all()
- 
-
-        if message_list.exists():
-            return render(request, "chat/inbox.html",{'message_list':message_list})
-        return render(request, "chat/inbox.html",{'message_list':message_list})
-
