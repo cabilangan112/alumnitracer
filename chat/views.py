@@ -35,14 +35,16 @@ def inbox(request, template_name='chat/inbox.html'):
 
 @login_required
 def outbox(request, template_name='chat/outbox.html'):
-    message_list = Message.objects.outbox_for(request.user)
+    query = request.GET.get('q')
+    message_list = Message.objects.outbox_for(request.user).search(query)
     return render(request, template_name, {
         'message_list': message_list,
     })
 
 @login_required
 def trash(request, template_name='chat/trash.html'):
-    message_list = Message.objects.trash_for(request.user)
+    query = request.GET.get('q')
+    message_list = Message.objects.trash_for(request.user).search(query)
     return render(request, template_name, {
         'message_list': message_list,
     })
@@ -59,7 +61,7 @@ def compose(request, recipient=None, form_class=ComposeForm,
             form.save(sender=request.user)
             messages.info(request, _(u"Message successfully sent."))
             if success_url is None:
-                success_url = reverse('messages_inbox')
+                success_url = reverse('chat:messages_inbox')
             if 'next' in request.GET:
                 success_url = request.GET['next']
             return HttpResponseRedirect(success_url)
@@ -73,12 +75,12 @@ def compose(request, recipient=None, form_class=ComposeForm,
     })
 
 @login_required
-def reply(request, sender_id, form_class=ComposeForm,
-        template_name='chat/compose.html', success_url=None,
+def reply(request, pk, form_class=ComposeForm,
+        template_name='chat/reply.html', success_url=None,
         recipient_filter=None, quote_helper=format_quote,
         subject_template=_(u"Re: %(subject)s"),):
 
-    parent = get_object_or_404(Message, sender_id=sender_id)
+    parent = get_object_or_404(Message, pk=pk)
 
     if parent.sender != request.user and parent.recipient != request.user:
         raise Http404
@@ -90,7 +92,7 @@ def reply(request, sender_id, form_class=ComposeForm,
             form.save(sender=request.user, parent_msg=parent)
             messages.info(request, _(u"Message successfully sent."))
             if success_url is None:
-                success_url = reverse('messages_inbox')
+                success_url = reverse('chat:messages_inbox')
             return HttpResponseRedirect(success_url)
     else:
         form = form_class(initial={
@@ -153,7 +155,6 @@ def undelete(request, message_id, success_url=None):
 def view(request, message_id, form_class=ComposeForm, quote_helper=format_quote,
         subject_template=_(u"Re: %(subject)s"),
         template_name='chat/chat.html'):
-
     user = request.user
     now = timezone.now()
     message = get_object_or_404(Message, id=message_id)

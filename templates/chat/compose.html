@@ -1,15 +1,108 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  {% block content %}
+  {% load i18n %}
+	<head>
+  {% include 'snippets/css.html'%}
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inbox.css' %}">
+  	<link rel="stylesheet" href="{% static 'css/compose.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	  <meta charset="utf-8">
+	  <title></title>
+	</head>
+	<body>
+	{% include 'sidebar.html'%}
+	<div class="container">
+	  <div class="mail-box">
+	    <aside class="sm-side">
+	      <div class="user-head">
+	        <a class="inbox-avatar" href="javascript:;">
+	          <img width="64" hieght="60" src="{% static 'img/logo.jpeg' %}">
+	        </a>
+	        <div class="user-name">
+	          <h5><a href="#">Notre Dame Mailing System </a></h5>
+	          <span><a href="#">Notre Dame Of Midsayap College</a></span>
+	        </div>
+	      </div>
+	      <div class="inbox-body">
+	        <a href="{% url 'chat:messages_compose' %}"data-toggle="modal" title="Compose" class="btn btn-compose">Compose</a>
+	      </div>
+	      <ul class="inbox-nav inbox-divider">
+	        <li class="active">
+	          <a href="#"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right"> 
+	              </span></a>
+	        </li>
+	        <li>
+	          <a href="{% url 'chat:messages_outbox' %}"><i class="fa fa-envelope-o"></i> Sent Mail</a>
+	        </li>
+	        <li>
+	          <a href="#"><i class="fa fa-bookmark-o"></i> Important</a>
+	        </li>
+	        <li>
+	          <a href="#"><i class=" fa fa-external-link"></i> Drafts <span class="label label-info pull-right">30</span></a>
+	        </li>
+	        <li>
+	          <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
+	        </li>
+	      </ul>
+	    </aside>
+	    <aside class="lg-side">
+	      <div class="inbox-head">
+	        <h3>Inbox</h3>
+	      </div>
+	      <div class="inbox-body">
+	      	<table class="table table-inbox table-hover">
+	        <div class="container bootdey">
+					  <div class="email-app">
+<main>
  
-{% load i18n %}
-
-{% block content %}
-<h1>{% trans "Compose Message"%}</h1>
-<form action="" method="post">
-	{{ form.subject}}
-{% csrf_token %}
-<table>
-{{ form.as_table }}
-</table>
-<input type="submit" value="{% trans "Send" %} &raquo;"/>
-</form>
-
-{% endblock %}
+        <form method="post" ctype="multipart/form-data">
+        	{% csrf_token %}
+            <div class="form-row mb-3">
+                <label for="to" class="col-2 col-sm-1 col-form-label">To:</label>
+                <div class="col-10 col-sm-11">
+                     {{ form.recipient }}
+                </div>
+            </div>
+            <div class="form-row mb-3">
+                <label for="cc" class="col-2 col-sm-1 col-form-label">CC:</label>
+                <div class="col-10 col-sm-11">
+                  	{{ form.subject}}
+                </div>
+            </div>
+ 
+ 
+        <div class="row">
+            <div class="col-sm-11 ml-auto">
+                
+                <div class="form-group mt-4">
+                    {{ form.body }}
+                </div>
+                <div class="form-group">
+      
+                    {% if form.errors %}
+                    <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
+                      {% for field in form %}
+                        {{ field.errors }}
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+          
+                  <input type="submit" class="btnRegister"  value="{{ next }}Send "/>
+                </div>
+            </div>
+        </div>
+      </form>
+    </main>
+			 
+	    	   </div>
+	    </aside>
+	  </div>
+	</div>
+ 
+</html>
+ 
+    {% endblock %}
