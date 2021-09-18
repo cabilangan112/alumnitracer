@@ -2,135 +2,100 @@
 <html>
   {% load static %}
   {% block content %}
-<head>
+  {% load i18n %}
+  <head>
   {% include 'snippets/css.html'%}
-  <link rel="stylesheet" href="{% static 'css/reply.css' %}">
-  <meta charset="utf-8">
-  <title></title>
-</head>
-<body>
- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
-<div class="email-app mb-4">
-    <nav>
-      <a href="#" class="btn btn-danger btn-block">New Email</a>
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-inbox"></i> Inbox <span class="badge badge-danger">4</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-star"></i> Stared</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-rocket"></i> Sent</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-trash-o"></i> Trash</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-bookmark"></i> Important<span class="badge badge-info">5</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-inbox"></i> Inbox <span class="badge badge-danger">4</span></a>
-        </li>
-      </ul>
-    </nav>
-    <main class="message">
-      <div class="toolbar">
-        <div class="btn-group">
-          <button type="button" class="btn btn-light">
-            <span class="fa fa-star"></span>
-          </button>
-          <button type="button" class="btn btn-light">
-            <span class="fa fa-star-o"></span>
-          </button>
-          <button type="button" class="btn btn-light">
-            <span class="fa fa-bookmark-o"></span>
-          </button>
-        </div>
-        <div class="btn-group">
-          <button type="button" class="btn btn-light">
-            <span class="fa fa-mail-reply"></span>
-          </button>
-          <button type="button" class="btn btn-light">
-            <span class="fa fa-mail-reply-all"></span>
-          </button>
-          <button type="button" class="btn btn-light">
-            <span class="fa fa-mail-forward"></span>
-          </button>
-        </div>
-        <button type="button" class="btn btn-light">
-          <span class="fa fa-trash-o"></span>
-        </button>
-        <div class="btn-group">
-          <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-            <span class="fa fa-tags"></span>
-            <span class="caret"></span>
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">add label <span class="badge badge-danger"> Home</span></a>
-            <a class="dropdown-item" href="#">add label <span class="badge badge-info"> Job</span></a>
-            <a class="dropdown-item" href="#">add label <span class="badge badge-success"> Clients</span></a>
-            <a class="dropdown-item" href="#">add label <span class="badge badge-warning"> News</span></a>
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inbox.css' %}">
+    <link rel="stylesheet" href="{% static 'css/compose.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+  {% include 'sidebar.html'%}
+  <div class="container">
+    <div class="mail-box">
+      <aside class="sm-side">
+        <div class="user-head">
+          <a class="inbox-avatar" href="javascript:;">
+            <img width="64" hieght="60" src="{% static 'img/logo.jpeg' %}">
+          </a>
+          <div class="user-name">
+            <h5><a href="#">Notre Dame Mailing System </a></h5>
+            <span><a href="#">Notre Dame Of Midsayap College</a></span>
           </div>
+        </div>
+        <div class="inbox-body">
+          <a href="{% url 'chat:messages_compose' %}"data-toggle="modal" title="Compose" class="btn btn-compose">Compose</a>
+        </div>
+        <ul class="inbox-nav inbox-divider">
+          <li class="active">
+            <a href="#"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right"> 
+                </span></a>
+          </li>
+          <li>
+            <a href="{% url 'chat:messages_outbox' %}"><i class="fa fa-envelope-o"></i> Sent Mail</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-bookmark-o"></i> Important</a>
+          </li>
+          <li>
+            <a href="#"><i class=" fa fa-external-link"></i> Drafts <span class="label label-info pull-right">30</span></a>
+          </li>
+          <li>
+            <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
+          </li>
+        </ul>
+      </aside>
+      <aside class="lg-side">
+        <div class="inbox-head">
+          <h3>Inbox</h3>
+        </div>
+        <div class="inbox-body">
+          <table class="table table-inbox table-hover">
+          <div class="container bootdey">
+     <div class="col-md-10">
+<div class="row inbox-wrapper">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-9 email-content">
+              <div class="email-head">
+                <div class="email-head-subject">
+                  <div class="title d-flex align-items-center"> 
+ 
+                  </div>
+                </div>
+ 
+              </div>
+              <div class="email-body">
+                <p>Hello,</p>
+                <br>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                <br>
+                <p>Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.</p>
+                <br>
+                <p><strong>Regards</strong>,<br> John Doe</p>
+              </div>
+              <div class="email-attachments">
+                <div class="title">Attachments <span>(3 files, 12,44 KB)</span></div>
+                <ul>
+                  <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Reference.zip <span class="text-muted tx-11">(5.10 MB)</span></a></li>
+                  <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Instructions.zip <span class="text-muted tx-11">(3.15 MB)</span></a></li>
+                  <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Team-list.pdf <span class="text-muted tx-11">(4.5 MB)</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+            
         </div>
       </div>
-      <div class="details">
-        <div class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</div>
-        <div class="header">
-          <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
-          <div class="from">
-            <span>Lukasz Holeczek</span>
-            lukasz@bootstrapmaster.com
-          </div>
-          <div class="date">Today, <b>3:47 PM</b></div>
-        </div>
-        <div class="content">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <blockquote>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </blockquote>
-        </div>
-        <div class="attachments">
-          <div class="attachment">
-            <span class="badge badge-danger">zip</span> <b>bootstrap.zip</b> <i>(2,5MB)</i>
-            <span class="menu">
-              <a href="#" class="fa fa-search"></a>
-              <a href="#" class="fa fa-share"></a>
-              <a href="#" class="fa fa-cloud-download"></a>
-            </span>
-          </div>
-          <div class="attachment">
-            <span class="badge badge-info">txt</span> <b>readme.txt</b> <i>(7KB)</i>
-            <span class="menu">
-              <a href="#" class="fa fa-search"></a>
-              <a href="#" class="fa fa-share"></a>
-              <a href="#" class="fa fa-cloud-download"></a>
-            </span>
-          </div>
-          <div class="attachment">
-            <span class="badge badge-success">xls</span> <b>spreadsheet.xls</b> <i>(984KB)</i>
-            <span class="menu">
-              <a href="#" class="fa fa-search"></a>
-              <a href="#" class="fa fa-share"></a>
-              <a href="#" class="fa fa-cloud-download"></a>
-            </span>
-          </div>
-        </div>
-        <form method="post" action="">
-          <div class="form-group">
-            <textarea class="form-control" id="message" name="body" rows="12" placeholder="Click here to reply"></textarea>
-          </div>
-          <div class="form-group">
-            <button tabindex="3" type="submit" class="btn btn-success">Send message</button>
-          </div>
-        </form>
-      </div>
-    </main>
+    </div>
+  </div>
+</div>
   </div>
   </div>
 

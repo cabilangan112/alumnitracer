@@ -106,7 +106,7 @@
               {% for qs in message_list %}  
                 {% if qs.new %}
                   <a href="#">
-                  <tr class="unread"onclick="window.location='{% url 'chat:messages_reply' qs.pk %}';"> 
+                  <tr class="unread"onclick="window.location='{% url 'chat:messages_detail' qs.pk %}';"> 
                     <td class="inbox-small-cells">
                       <input type="checkbox" class="mail-checkbox">
                     </td>
@@ -118,7 +118,7 @@
                   </tr>
                 </a> 
                   {% else %}
-                  <tr class=""onclick="window.location='{% url 'chat:messages_reply' qs.pk %}';">
+                  <tr class=""onclick="window.location='{% url 'chat:messages_detail' qs.pk %}';">
 
                     <td class="inbox-small-cells">
                       <input type="checkbox" class="mail-checkbox">

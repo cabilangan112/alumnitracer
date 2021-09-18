@@ -1,35 +1,154 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  {% block content %}
+  {% load i18n %}
+  <head>
+        {% include 'snippets/css.html'%}
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inbox.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+{% include 'sidebar.html'%}
+<body>
  
-{% load i18n %}
+  {% include 'sidebar.html'%}
+  <div class="container">
+    <div class="mail-box">
+      <aside class="sm-side">
+        <div class="user-head">
+          <a class="inbox-avatar" href="javascript:;">
+            <img width="64" hieght="60" src="{% static 'img/logo.jpeg' %}">
+          </a>
+          <div class="user-name">
+            <h5><a href="#">Notre Dame Mailing System </a></h5>
+            <span><a href="#">Notre Dame Of Midsayap College</a></span>
+          </div>
+        </div>
+        <div class="inbox-body">
+          <a href="{% url 'chat:messages_compose' %}"data-toggle="modal" title="Compose" class="btn btn-compose">Compose</a>
+        </div>
+        <ul class="inbox-nav inbox-divider">
+          <li class="active">
+            <a href="#"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right"> 
+            </span></a>
+          </li>
+          <li>
+            <a href="{% url 'chat:messages_outbox' %}"><i class="fa fa-envelope-o"></i> Sent Mail</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-bookmark-o"></i> Important</a>
+          </li>
+          <li>
+            <a href="#"><i class=" fa fa-external-link"></i> Drafts <span class="label label-info pull-right">30</span></a>
+          </li>
+          <li>
+            <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
+          </li>
+        </ul>
+      </aside>
+      <aside class="lg-side">
+        <div class="inbox-head">
+          <h3>Inbox</h3>
+        </div>
+           <aside class="lg-side">
+            <div class="inbox-body">
+              <div class="heading-inbox row">
+                <div class="col-md-8">
+                  <div class="compose-btn">
+                    <a class="btn btn-sm btn-primary" href="{% url 'chat:messages_reply' message.id %}" data-original-title="" title=""><i class="fa fa-reply"></i> Reply</a>
+                    <button title="" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Print" class="btn  btn-sm tooltips"><i class="fa fa-print"></i> </button>
+                    <button title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm tooltips"><i class="fa fa-trash-o"></i></button>
+                  </div>
+                </div>
+                <div class="col-md-4 text-right">
+                  <p class="date"> {{ message.sent_at|date:'h:i A d M Y' }}</p>
+                </div>
+                <div class="col-md-12">
+                  <h4> {{message.subject}}</h4>
+                </div>
+            </div>
+            <div class="sender-info">
+              <div class="row">
+                <div class="col-md-12">
+                  <img alt="" src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                  <strong>{{ message.sender.first_name }} {{ message.sender.last_name }}</strong>
+                  <span>[{{ message.sender.email }}]</span>
+                  to
+                  <strong>me</strong>
+                  <a class="sender-dropdown " href="javascript:;">
+                      <i class="fa fa-chevron-down"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="view-mail">
+              <p> {{ message.body }}</p>
+            </div>
+            <div class="attachment-mail">
+              <p>
+                <span><i class="fa fa-paperclip"></i> 3 attachments — </span>
+                <a href="#">Download all attachments</a>
+                |
+                <a href="#">View all images</a>
+              </p>
+              <ul>
+              <li>
+                <a href="#" class="atch-thumb">
+                  <img src="https://via.placeholder.com/128x100">
+                </a>
+                <div class="file-name">
+                  image-name.jpg
+                </div>
+                <span>12KB</span>
+                <div class="links">
+                  <a href="#">View</a> -
+                  <a href="#">Download</a>
+                </div>
+              </li>
+              <li>
+                <a href="#" class="atch-thumb">
+                  <img src="https://via.placeholder.com/128x100">
+                </a>
+                <div class="file-name">
+                  img_name.jpg
+                </div>
+                <span>40KB</span>
+                <div class="links">
+                  <a href="#">View</a> -
+                  <a href="#">Download</a>
+                </div>
+              </li>
+              <li>
+                <a href="#" class="atch-thumb">
+                  <img src="https://via.placeholder.com/128x100">
+                </a>
+                <div class="file-name">
+                  img_name.jpg
+                </div>
+                <span>30KB</span>
+                <div class="links">
+                  <a href="#">View</a> -
+                  <a href="#">Download</a>
+                </div>
+              </li>
+              </ul>
+            </div>
+            <div class="compose-btn pull-left">
+                <a class="btn btn-sm btn-primary" href="mail_compose.html" data-original-title="" title=""><i class="fa fa-reply"></i> Reply</a>
+                <button class="btn btn-sm " data-original-title="" title=""><i class="fa fa-arrow-right"></i> Forward</button>
+                <button title="" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Print" class="btn  btn-sm tooltips"><i class="fa fa-print"></i> </button>
+                <button title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm tooltips"><i class="fa fa-trash-o"></i></button>
+            </div>
+        </div>
+      </aside>
+    </aside>
+  </div>
+</div>
+</body>
 
-{% block content %}
-<h1>{% trans "View Message" %}</h1>
-<dl class="message-headers">
-    <dt>{% trans "Subject" %}</dt>
-    <dd><strong>{{ message.subject }}</strong></dd>
-    <dt>{% trans "Sender" %}</dt>
-    <dd>{{ message.sender }}</dd>
-    <dt>{% trans "Date" %} </dt>
-    <dd>{{ message.sent_at|date:_("DATETIME_FORMAT")}}</dd>
-    <dt>{% trans "Recipient" %}</dt>
-    <dd>{{ message.recipient }}</dd>
-</dl>
-{{ message.body|linebreaksbr }}<br /><br />
-
-{% ifequal message.recipient.pk user.pk %}
-<a href="{% url 'chat:messages_reply' message.id %}">{% trans "Reply" %}</a>
-{% endifequal %}
-<a href="{% url 'chat:messages_delete' message.id %}">{% trans "Delete" %}</a>
-
-{% comment %}Example reply_form integration
-{% if reply_form %}
-<h1>{% trans "Compose reply"%}</h1>
-<form action="{% url 'chat:messages_reply' message.id %}" method="post">
-{% csrf_token %}
-<table>
-{{ reply_form.as_table }}
-</table>
-<input type="submit" value="{% trans "Send" %} &raquo;"/>
-</form>
-{% endif %}
-{% endcomment %}
-{% endblock %}
+    {% endblock %}
+</html>
+ 

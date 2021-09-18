@@ -75,12 +75,12 @@ def compose(request, recipient=None, form_class=ComposeForm,
     })
 
 @login_required
-def reply(request, pk, form_class=ComposeForm,
-        template_name='chat/reply.html', success_url=None,
+def reply(request, message_id, form_class=ComposeForm,
+        template_name='chat/compose.html', success_url=None,
         recipient_filter=None, quote_helper=format_quote,
         subject_template=_(u"Re: %(subject)s"),):
 
-    parent = get_object_or_404(Message, pk=pk)
+    parent = get_object_or_404(Message, id=message_id)
 
     if parent.sender != request.user and parent.recipient != request.user:
         raise Http404
