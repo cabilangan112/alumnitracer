@@ -13,8 +13,6 @@
   </head>
 {% include 'sidebar.html'%}
 <body>
- 
-  {% include 'sidebar.html'%}
   <div class="container">
     <div class="mail-box">
       <aside class="sm-side">
@@ -31,8 +29,8 @@
           <a href="{% url 'chat:messages_compose' %}"data-toggle="modal" title="Compose" class="btn btn-compose">Compose</a>
         </div>
         <ul class="inbox-nav inbox-divider">
-          <li class="active">
-            <a href="#"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right"> 
+          <li class=" ">
+            <a href="{% url 'chat:messages_inbox' %}"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right"> 
             </span></a>
           </li>
           <li>
@@ -45,7 +43,7 @@
             <a href="#"><i class=" fa fa-external-link"></i> Drafts <span class="label label-info pull-right">30</span></a>
           </li>
           <li>
-            <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
+            <a href="{% url 'chat:messages_trash' %}"><i class=" fa fa-trash-o"></i> Trash</a>
           </li>
         </ul>
       </aside>
@@ -60,7 +58,7 @@
                   <div class="compose-btn">
                     <a class="btn btn-sm btn-primary" href="{% url 'chat:messages_reply' message.id %}" data-original-title="" title=""><i class="fa fa-reply"></i> Reply</a>
                     <button title="" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Print" class="btn  btn-sm tooltips"><i class="fa fa-print"></i> </button>
-                    <button title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm tooltips"><i class="fa fa-trash-o"></i></button>
+                    <button  onclick="window.location.href='{% url 'chat:messages_delete' message.id %}'"title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm tooltips"><i class="fa fa-trash-o"></i></button>
                   </div>
                 </div>
                 <div class="col-md-4 text-right">
@@ -73,7 +71,12 @@
             <div class="sender-info">
               <div class="row">
                 <div class="col-md-12">
-                  <img alt="" src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                  {% if message.sender.image.url is not null %}  
+                  <img alt=""src="{{ MEDIA_URL }}{{ message.sender.image.url }}">
+                  {% else %}
+                  <img alt=""src="{% static 'img/user.jpg' %}">
+                  {% endif %}
+
                   <strong>{{ message.sender.first_name }} {{ message.sender.last_name }}</strong>
                   <span>[{{ message.sender.email }}]</span>
                   to
@@ -87,61 +90,13 @@
             <div class="view-mail">
               <p> {{ message.body }}</p>
             </div>
+            {% if message.file.url is not null %}  
             <div class="attachment-mail">
-              <p>
-                <span><i class="fa fa-paperclip"></i> 3 attachments — </span>
-                <a href="#">Download all attachments</a>
-                |
-                <a href="#">View all images</a>
-              </p>
-              <ul>
-              <li>
-                <a href="#" class="atch-thumb">
-                  <img src="https://via.placeholder.com/128x100">
-                </a>
-                <div class="file-name">
-                  image-name.jpg
-                </div>
-                <span>12KB</span>
-                <div class="links">
-                  <a href="#">View</a> -
-                  <a href="#">Download</a>
-                </div>
-              </li>
-              <li>
-                <a href="#" class="atch-thumb">
-                  <img src="https://via.placeholder.com/128x100">
-                </a>
-                <div class="file-name">
-                  img_name.jpg
-                </div>
-                <span>40KB</span>
-                <div class="links">
-                  <a href="#">View</a> -
-                  <a href="#">Download</a>
-                </div>
-              </li>
-              <li>
-                <a href="#" class="atch-thumb">
-                  <img src="https://via.placeholder.com/128x100">
-                </a>
-                <div class="file-name">
-                  img_name.jpg
-                </div>
-                <span>30KB</span>
-                <div class="links">
-                  <a href="#">View</a> -
-                  <a href="#">Download</a>
-                </div>
-              </li>
-              </ul>
+              <source src="{{message.file.url}}" type="audio/{{message.file.type}}">
+
             </div>
-            <div class="compose-btn pull-left">
-                <a class="btn btn-sm btn-primary" href="mail_compose.html" data-original-title="" title=""><i class="fa fa-reply"></i> Reply</a>
-                <button class="btn btn-sm " data-original-title="" title=""><i class="fa fa-arrow-right"></i> Forward</button>
-                <button title="" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Print" class="btn  btn-sm tooltips"><i class="fa fa-print"></i> </button>
-                <button title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm tooltips"><i class="fa fa-trash-o"></i></button>
-            </div>
+           {% endif %}
+ 
         </div>
       </aside>
     </aside>

@@ -60,6 +60,7 @@ class Message(models.Model):
 
     subject = models.CharField(_("Subject"), max_length=140)
     body = models.TextField(_("Body"))
+    file = models.FileField(blank=True, null=True,upload_to='file' )
     sender = models.ForeignKey(User, related_name='sent_messages', verbose_name=_("Sender"), on_delete = models.CASCADE)
     recipient = models.ForeignKey(User, related_name='received_messages', null=True, blank=True, verbose_name=_("Recipient"), on_delete=models.SET_NULL)
     parent_msg = models.ForeignKey('self', related_name='next_messages', null=True, blank=True, verbose_name=_("Parent message"), on_delete=models.SET_NULL)
@@ -94,6 +95,10 @@ class Message(models.Model):
             self.sent_at = timezone.now()
         super(Message, self).save(**kwargs)
 
+    def extension(self):
+        name, extension = os.path.splitext(self.file.name)
+        return extension
+        
     class Meta:
         ordering = ['-sent_at']
         verbose_name = _("Message")

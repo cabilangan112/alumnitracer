@@ -16,8 +16,7 @@
         {% if user.is_authenticated %}
           {% if request.user.is_staff %}
             <div class="user-pic">
-              <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-                alt="User picture">
+              <img class="img-responsive img-rounded" src="{% static 'img/user.jpg' %}"alt="User picture">
             </div>
             <div class="user-info">
               <span class="user-name">{{ user.first_name}}
@@ -34,8 +33,7 @@
             {% if user.image.url is not null %}  
               <img class="img-responsive img-rounded" src="{{ MEDIA_URL }}{{ user.image.url }}"alt="User picture">
             {% else %}
-              <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-                alt="User picture">         
+              <img class="img-responsive img-rounded" src="{% static 'img/user.jpg' %}"   alt="User picture">         
             {% endif %}
             </div>
             <div class="user-info">
@@ -176,25 +174,7 @@
               <li class="header-menu">
                 <span>Extra</span>
               </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-book"></i>
-                  <span>Documentation</span>
-                  <span class="badge badge-pill badge-primary">Beta</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-calendar"></i>
-                  <span>Calendar</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="fa fa-folder"></i>
-                  <span>Examples</span>
-                </a>
-              </li>
+ 
             </ul>
             {% endif %}
           {% endif %}

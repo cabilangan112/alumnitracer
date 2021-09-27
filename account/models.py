@@ -1,20 +1,15 @@
 from django.db import models
 from django.conf import settings 
 from django.urls import reverse
-
 import uuid
-
 from .manager import UserManager
 from django.contrib.auth.models import (
      BaseUserManager, AbstractBaseUser,PermissionsMixin
 )
-
-
 GENDER = (
     ('Male', 'Male'),
     ('Female', 'Female')
 )
-
 
 class Course(models.Model):
     course_code        = models.CharField(max_length=100)

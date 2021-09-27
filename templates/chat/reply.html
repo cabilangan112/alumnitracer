@@ -32,7 +32,7 @@
         </div>
         <ul class="inbox-nav inbox-divider">
           <li class="active">
-            <a href="#"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right"> 
+            <a href="{% url 'chat:messages_inbox' %}"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right"> 
                 </span></a>
           </li>
           <li>
@@ -45,7 +45,7 @@
             <a href="#"><i class=" fa fa-external-link"></i> Drafts <span class="label label-info pull-right">30</span></a>
           </li>
           <li>
-            <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
+            <a href="{% url 'chat:messages_trash' %}"><i class=" fa fa-trash-o"></i> Trash</a>
           </li>
         </ul>
       </aside>
@@ -55,49 +55,54 @@
         </div>
         <div class="inbox-body">
           <table class="table table-inbox table-hover">
-          <div class="container bootdey">
-     <div class="col-md-10">
-<div class="row inbox-wrapper">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-lg-9 email-content">
-              <div class="email-head">
-                <div class="email-head-subject">
-                  <div class="title d-flex align-items-center"> 
- 
-                  </div>
-                </div>
- 
-              </div>
-              <div class="email-body">
-                <p>Hello,</p>
-                <br>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-                <br>
-                <p>Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.</p>
-                <br>
-                <p><strong>Regards</strong>,<br> John Doe</p>
-              </div>
-              <div class="email-attachments">
-                <div class="title">Attachments <span>(3 files, 12,44 KB)</span></div>
-                <ul>
-                  <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Reference.zip <span class="text-muted tx-11">(5.10 MB)</span></a></li>
-                  <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Instructions.zip <span class="text-muted tx-11">(3.15 MB)</span></a></li>
-                  <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Team-list.pdf <span class="text-muted tx-11">(4.5 MB)</span></a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-            
-        </div>
-      </div>
+            <div class="container bootdey">
+              <div class="email-app">
+                <main>
+                <form method="post" ctype="multipart/form-data">
+                  {% csrf_token %}
+                    <div class="form-row mb-3">
+                      <label for="to" class="col-2 col-sm-1 col-form-label">To:</label>
+                      <div class="col-10 col-sm-11">
+                        {{ form.recipient }}
+                      </div>
+                    </div>
+                    <div class="form-row mb-3">
+                      <label for="cc" class="col-2 col-sm-1 col-form-label">CC:</label>
+                      <div class="col-10 col-sm-11">
+                        {{ form.subject}}
+                        Body :  {{parent.body}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-11 ml-auto">
+                        <div class="form-group mt-4">
+                          {{ form.body }}
+                        </div>
+                        <div class="form-row mb-3">
+                          <label for="cc" class="col-2 col-sm-1 col-form-label">Attach File :</label>
+                          <div class="col-10 col-sm-11">
+                            {{ form.file }}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          {% if form.errors %}
+                            <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
+                              {% for field in form %}
+                                {{ field.errors }}
+                              {% endfor %}
+                            </div>
+                          {% endif %}
+                          <input type="submit" class="btnRegister"  value="{{ next }}Send "/>
+                        </div>
+                        </div>
+                    </div>
+                  </form>
+                </main>
+             </div>
+           </div>
+         </table>
+      </aside>
     </div>
   </div>
-</div>
-  </div>
-  </div>
-
-</body>
-    {% endblock %}
+</html>
+{% endblock %}

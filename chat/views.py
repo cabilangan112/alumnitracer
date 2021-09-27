@@ -12,7 +12,7 @@ except ImportError:
 from django.conf import settings
 from django.views.generic.detail import DetailView
 from .models import Message
-from .forms import ComposeForm
+from .forms import ComposeForm,ReplyForm
 from .utils import format_quote, get_user_model, get_username_field
 from django.views import View
 from django.views.generic.base import TemplateView,View
@@ -75,8 +75,8 @@ def compose(request, recipient=None, form_class=ComposeForm,
     })
 
 @login_required
-def reply(request, message_id, form_class=ComposeForm,
-        template_name='chat/compose.html', success_url=None,
+def reply(request, message_id, form_class=ReplyForm,
+        template_name='chat/reply.html', success_url=None,
         recipient_filter=None, quote_helper=format_quote,
         subject_template=_(u"Re: %(subject)s"),):
 
@@ -96,12 +96,13 @@ def reply(request, message_id, form_class=ComposeForm,
             return HttpResponseRedirect(success_url)
     else:
         form = form_class(initial={
-            'body': quote_helper(parent.sender, parent.body),
-            'subject': subject_template % {'subject': parent.subject},
+ 
+            'subject': parent.subject,
             'recipient': [parent.sender,]
             })
     return render(request, template_name, {
         'form': form,
+        'parent':parent,
     })
 
 @login_required
@@ -111,7 +112,7 @@ def delete(request, message_id, success_url=None):
     message = get_object_or_404(Message, id=message_id)
     deleted = False
     if success_url is None:
-        success_url = reverse('messages_inbox')
+        success_url = reverse('chat:messages_inbox')
     if 'next' in request.GET:
         success_url = request.GET['next']
     if message.sender == user:
