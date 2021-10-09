@@ -1,0 +1,86 @@
+{% load static %}
+{% block content %}
+{% load hitcount_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	   {% include 'snippets/css.html'%}
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+	  <link rel="stylesheet" href="{% static 'css/post.css' %}">
+	<title></title>
+</head>
+{% include 'sidebar.html'%}
+<body>
+  <div class="container">
+  	<div class="row"> 
+      <div class="col-md-12">
+        <div id="content" class="content content-full-width">
+          <div class="profile-content">
+            <div class="tab-content p-0">
+              <div class="tab-pane fade active show" id="profile-post">
+                <ul class="timeline">
+                  {% for qs in post %}
+		                <li>
+	                    <div class="timeline-time">
+	                      <span class="date">{{ qs.date|date:"F" }}</span>
+	                      <span class="time">{{ qs.date|time }}</span>
+	                    </div>
+											<div class="timeline-icon">
+												<a href="javascript:;">&nbsp;</a>
+											</div>
+		                  <div class="timeline-body">
+												<div class="timeline-header">
+												 <span class="userimage">
+												 	  {% if qs.user.image.url is not null %}  
+												      <img src="{{ MEDIA_URL }}{{ qs.user.image.url }}" alt=""> 
+												    {% else %}
+												      <img alt=""src="{% static 'img/user.jpg' %}">
+												    {% endif %} 
+												  </span>
+												  <span class="username"><a href="javascript:;">{{ qs.user.first_name}} {{ qs.user.last_name}} </a> <small></small></span>
+												  <span class="pull-right text-muted">
+												   {% get_hit_count for qs %} views
+												  </span>
+												</div>
+												<div class="timeline-content">
+												  <h5>{{ qs.title}}</h5>
+												  <p>
+												 	 {{ qs.body}}
+												  </p>
+												  {% if qs.banner_photo.url is not null %}
+                          <div class="banner_photo">  
+                            <img src="{{ MEDIA_URL }}{{ qs.banner_photo.url }}" alt=""> 
+                          </div>
+                          {% endif %} 
+												</div>
+												<div class="timeline-likes">
+													<div class="stats-right">
+							   
+														 {% for comment  in qs.comment_set.all %}
+														<span class="stats-text">
+															 {{ comment|length}}  
+														</span>
+														{% endfor %} 
+													</div>
+													<div class="stats">
+														<span class="stats-total"> </span>
+													</div>
+												</div>
+												<div class="timeline-footer">
+												<a href="{% url 'post:detail' qs.title  %}" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+												<a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Detail</a>
+												</div>
+		                  </div>>
+		                  {% endfor %}
+		             		</ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+	    </div>
+   </body>
+</html>
+{% endblock %}

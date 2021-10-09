@@ -41,8 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'alumni.apps.AlumniConfig', 
     'account.apps.AccountConfig', 
-    'chat.apps.ChatConfig', 
+    'chat.apps.ChatConfig',
+    'post.apps.PostConfig', 
     'django_countries',
+    'hitcount',
 ]
 
 MIDDLEWARE = [
@@ -138,5 +140,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
 
 
 LOGIN_REDIRECT_URL = '/login/'
-LOGIN_URL = '/'
+LOGIN_URL = '/login'
 AUTH_USER_MODEL = 'account.User'

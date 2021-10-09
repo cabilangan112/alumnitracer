@@ -96,35 +96,7 @@ class PersonalInformationForm(forms.Form):
     not_pursuing_further_studies= forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'IF NOT PURSUING FURTHER STUDIES * '}))
     reason_of_unemployed        = forms.CharField(widget=forms.Textarea)
 
-    academic_professional     = forms.ChoiceField(choices=CHOICES )
-    research_capability       = forms.ChoiceField(choices=CHOICES )
-    learning_efficiency       = forms.ChoiceField(choices=CHOICES )
-    communication_skills      = forms.ChoiceField(choices=CHOICES )
-    people_skills             = forms.ChoiceField(choices=CHOICES )
-    problem_solving_skills    = forms.ChoiceField(choices=CHOICES )
-    information_technology_skills = forms.ChoiceField(choices=CHOICES )
-    meeting_present           = forms.ChoiceField(choices=CHOICES )
-    local_community           = forms.ChoiceField(choices=CHOICES )
-    international_community   = forms.ChoiceField(choices=CHOICES )
-    critical_thinking_skills  = forms.ChoiceField(choices=CHOICES )
-    salary_improvement        = forms.ChoiceField(choices=CHOICES )
-    opportunities_abroad      = forms.ChoiceField(choices=CHOICES )
-    personality_development   = forms.ChoiceField(choices=CHOICES )
-    values_formation          = forms.ChoiceField(choices=CHOICES )
-    range_of_courses          = forms.ChoiceField(choices=CHOICES )
-    relevance_profession      = forms.ChoiceField(choices=CHOICES )
-    extracurricular_activities= forms.ChoiceField(choices=CHOICES )
-    premium_given_research    = forms.ChoiceField(choices=CHOICES )
-    interdisciplinary_learning= forms.ChoiceField(choices=CHOICES ) 
-    teaching_learning         = forms.ChoiceField(choices=CHOICES )
-    quality_instruction       = forms.ChoiceField(choices=CHOICES )
-    teacher_student_relationships = forms.ChoiceField(choices=CHOICES )
-    library_resources             = forms.ChoiceField(choices=CHOICES )
-    laboratory_resources          = forms.ChoiceField(choices=CHOICES )
-    class_size                    = forms.ChoiceField(choices=CHOICES )
-    professors_pedagogical        = forms.ChoiceField(choices=CHOICES )
-    professors_knowledge          = forms.ChoiceField(choices=CHOICES )
-
+ 
 
     def save(self):
         data = self.cleaned_data
@@ -171,36 +143,7 @@ class PersonalInformationForm(forms.Form):
             degree_program       = data['degree_program'],
             pursuing_further_studies = data['pursuing_further_studies'],     
             not_pursuing_further_studies = data['not_pursuing_further_studies'],
-
-            reason_of_unemployed = data['reason_of_unemployed'],
-            academic_professional = data['academic_professional'],
-            research_capability  = data['research_capability'],
-            learning_efficiency  = data['learning_efficiency'],
-            communication_skills = data['communication_skills'],
-            people_skills        = data['people_skills'],
-            problem_solving_skills = data['problem_solving_skills'],
-            information_technology_skills = data['information_technology_skills'],
-            meeting_present      = data['meeting_present'],
-            local_community      = data['local_community'],
-            international_community  = data['international_community'],
-            critical_thinking_skills = data['critical_thinking_skills'],
-            salary_improvement       = data['salary_improvement'],
-            opportunities_abroad     = data['opportunities_abroad'],
-            personality_development  = data['personality_development'],
-            values_formation         = data['values_formation'],
-            range_of_courses         = data['range_of_courses'],
-            relevance_profession     = data['relevance_profession'],
-            extracurricular_activities = data['extracurricular_activities'],
-            premium_given_research     = data['premium_given_research'],
-            interdisciplinary_learning = data['interdisciplinary_learning'],
-            teaching_learning        = data['teaching_learning'],
-            quality_instruction      = data['quality_instruction'],
-            teacher_student_relationships = data['teacher_student_relationships'],
-            library_resources        = data['library_resources'],
-            laboratory_resources     = data['laboratory_resources'],
-            class_size               = data['class_size'],
-            professors_pedagogical   = data['professors_pedagogical'],
-            professors_knowledge     = data['professors_knowledge'],
+ 
             )
         personal.save()
 

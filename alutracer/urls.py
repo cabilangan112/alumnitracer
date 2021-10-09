@@ -18,17 +18,20 @@ from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from account.views import LoginView, RegisterView 
- 
+from post.views import PostView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', LoginView.as_view(), name='login'),
+    path('', PostView.as_view(), name='post'),
+    path('login', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
 
     path('account/', include('account.urls', namespace='user')),
     path('alumni/', include('alumni.urls', namespace='alumni')),
     path('chat/', include('chat.urls', namespace='chat')),
+    path('post/', include('post.urls', namespace='post')),
     path('register/',RegisterView.as_view(), name='register'),
+    path('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
 ]
 urlpatterns.extend(
     static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) +

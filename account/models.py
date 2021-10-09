@@ -11,6 +11,11 @@ GENDER = (
     ('Female', 'Female')
 )
 
+POST_STATUS = (
+    ('published', 'Published'),
+    ('draft', 'Draft'),
+    ('hidden', 'Hidden'),
+)
 class Course(models.Model):
     course_code        = models.CharField(max_length=100)
     course_description = models.CharField(max_length=100, null=True) 
@@ -110,6 +115,7 @@ class User(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+
 
 class Confirmation(models.Model):
     """ change password confirmation model

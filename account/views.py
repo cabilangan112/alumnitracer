@@ -15,7 +15,6 @@ from django.urls import reverse
 from .forms import UserLoginForm,UploadForm, UserRegisterForm,EditProfileForm,EditPasswordForm
 from django.contrib.auth.mixins import LoginRequiredMixin
  
-
 class ProfileView(LoginRequiredMixin,View):
     def get(self, request,*args, **kwargs):
         query = self.request.GET.get('q')

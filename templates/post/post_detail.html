@@ -1,0 +1,92 @@
+{% load static %}
+{% block content %}
+{% load hitcount_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+     {% include 'snippets/css.html'%}
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+  <title></title>
+</head>
+{% include 'sidebar.html'%}
+<body>
+  <div class="container">
+    <div class="row"> 
+      <div class="col-md-12">
+        <div id="content" class="content content-full-width">
+          <div class="profile-content">
+            <div class="tab-content p-0">
+              <div class="tab-pane fade active show" id="profile-post">
+                <ul class="timeline">
+               
+                    <li>
+                      <div class="timeline-time">
+                        <span class="date">{{ post.date|date:"F" }}</span>
+                        <span class="time">{{ post.date|time }}</span>
+                      </div>
+                      <div class="timeline-icon">
+                        <a href="javascript:;">&nbsp;</a>
+                      </div>
+                      <div class="timeline-body">
+                        <div class="timeline-header">
+                         <span class="userimage">
+                            {% if post.user.image.url is not null %}  
+                              <img src="{{ MEDIA_URL }}{{ post.user.image.url }}" alt=""> 
+                            {% else %}
+                              <img alt=""src="{% static 'img/user.jpg' %}">
+                            {% endif %} 
+                          </span>
+                          <span class="username"><a href="javascript:;">{{ post.user.first_name}} {{ post.user.last_name}} </a> <small></small></span>
+                          <span class="pull-right text-muted">
+                         views
+                          </span>
+                        </div>
+                        <div class="timeline-content">
+                          <h5>{{ post.title}}</h5>
+                          <p>
+                           {{ post.body}}
+                          </p>
+                          {% if post.banner_photo.url is not null %}
+                          <div class="banner_photo">  
+                            <img src="{{ MEDIA_URL }}{{ post.banner_photo.url }}" alt=""> 
+                          </div>
+                          {% endif %} 
+                        </div>
+                        <div class="timeline-likes">
+                          <div class="stats-right">
+                            <span class="stats-text">21 Comments</span>
+                          </div>
+                          <div class="stats">
+                            <span class="stats-total"> </span>
+                          </div>
+                        </div>
+                        <div class="timeline-footer">
+                        <a href=" " class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Detail</a>
+                        </div>
+                        <div class="timeline-comment-box">
+                          <div class="user"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"></div>
+                          <div class="input">
+                            <form action="">
+                              <div class="input-group">
+                                <input type="text" class="form-control rounded-corner" placeholder="Write a comment...">
+                                <span class="input-group-btn p-l-10">
+                                <button class="btn btn-primary f-s-12 rounded-corner" type="button">Comment</button>
+                                </span>
+                              </div>
+                            </form>
+                          </div>
+                      </div>  
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+   </body>
+</html>
+{% endblock %}
