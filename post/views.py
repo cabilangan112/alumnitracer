@@ -2,18 +2,36 @@ from django.shortcuts import render
 from django.contrib.auth import login
 from django.shortcuts import render, Http404, get_object_or_404, redirect
 from django.contrib.auth import get_user_model
-from django.views.generic import (ListView,DetailView,CreateView,UpdateView, View)
+from django.views.generic import (TemplateView,DetailView,CreateView,UpdateView, View)
 from .models import Post,Comment
 from .forms import PostForm,CommentForm,EditForm
 from account.models import User
 from django.contrib.auth.mixins import (LoginRequiredMixin,PermissionRequiredMixin)
 
 
-class PostView(LoginRequiredMixin,View):
-    def get(self, request, *args, **kwargs):
-        post = Post.objects.filter(status='published').order_by('-date')
-        context = {'post':post,}
-        return render(request, "post/post_list.html", context)
+class PostView(TemplateView):
+    
+    template_name = "post/post_list.html"
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super(PostView, self).get_context_data(*args, **kwargs)
+        post = Post.objects.filter(status='published') 
+        form = PostForm(self.request.POST or None,self.request.FILES or None)
+        context.update({
+            "post":post,
+            "form":form,
+        })
+        return context
+
+    def post(self,request, *args, **kwargs):
+        context = self.get_context_data()
+        form = context.get('form')
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post = form.save()
+            return redirect("post")
+        return render(self.request, self.template_name, context)
 
 def Draft(LoginRequiredMixin,request):
     post = Post.objects.filter(status='draft')
@@ -40,8 +58,8 @@ def PostCreate(request):
     return render(request, 'post.html', context)
 
 class PostDetailView(LoginRequiredMixin,View):
-    def get(self, request, title, *args, **kwargs):
-        post = get_object_or_404(Post, title=title, status='published')
+    def get(self, request, pk, *args, **kwargs):
+        post = get_object_or_404(Post, pk=pk, status='published')
         count_hit = True
         comment = post.comment_set.all()
         context = {'post':post,'comment': comment,}
@@ -75,7 +93,7 @@ class CreatePostView(View):
     def get(self, request):
         create = Post.objects.all()
         context = {'create' : create,'form' : PostForm,}
-        return render(request, "post.html", context)
+        return render(request, "post_list/post.html", context)
 
     def get(self, request):
         form = PostForm(request.POST)
@@ -84,7 +102,7 @@ class CreatePostView(View):
             form.save()
             return redirect('index')            
         context = {'form' : form,'post' : post,}        
-        return render(request, "post.html", context)
+        return render(request, "post/post_list.html", context)
 
 
 class UserDetail(View):

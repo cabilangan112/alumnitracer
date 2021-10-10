@@ -13,12 +13,11 @@ POST_STATUS = (
 
 class Post(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    title = models.CharField(max_length=150)
     banner_photo = models.ImageField(upload_to = 'post')
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=9, choices=POST_STATUS, blank=True, default=True)
+    status = models.CharField(max_length=9, choices=POST_STATUS, blank=True, default='published')
     hit_count_generic = GenericRelation(
         HitCount, object_id_field='object_pk',
         related_query_name='hit_count_generic_relation'
@@ -26,8 +25,9 @@ class Post(models.Model):
 
     def current_hit_count(self):
         return self.hit_count.hits
+
     def __str__(self):
-        return '{}'.format(self.title)
+        return '{}'.format(self.user)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True) 

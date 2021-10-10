@@ -6,10 +6,14 @@ class PostForm(forms.ModelForm):
         model = Post
         exclude = ('user',)
         fields = ('user',
-        'title',
+ 
         'banner_photo',
         'body',
-        'status',)
+        'status',
+        )
+        widgets = {
+            'body': forms.Textarea(attrs={'placeholder': "What's on your mind ? "   }),
+        }
  
  
 class CommentForm(forms.ModelForm):
@@ -26,7 +30,7 @@ class EditForm(forms.ModelForm):
         model = Post
         exclude = ('user',)
         fields = ('user',
-        'title',
+ 
         'banner_photo',
         'body',
         'status',)
