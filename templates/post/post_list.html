@@ -9,42 +9,49 @@
     <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
 	  <link rel="stylesheet" href="{% static 'css/post.css' %}">
 	  <link rel="stylesheet" href="{% static 'css/addpost.css' %}">
+	  <link rel="stylesheet" href="{% static 'css/backtop.css' %}">
+	  <link rel="stylesheet" href="{% static 'css/font-awesome.css.css' %}">
+	  <link rel="stylesheet" href="{% static 'css/unicons.css' %}">
 	<title></title>
 </head>
- 
-                                                                 
-	<div class="container  bootstrap snippets bootdey">
-	  <div class="row addpost">
-	      <div class="addpost  col-md-offset-3 col-md-6 col-xs-12">
-	          <div class="well well-sm well-social-post">
-	      <form method="post" enctype="multipart/form-data">
-	      	{% csrf_token %}
-	          <ul class="list-inline" id='list_PostActions'>
-	              <li class='active'><a href='#'>Update status</a></li>
-	          </ul>					 
-							<div class="form-group">
-			 					<img src="http://placehold.it/100/100"/>{{ form.body }}
-			 						{{ form.banner_photo }}
-							</div>
- 
- 
-   				  
-	          <ul class='list-inline post-actions'>
-	              <li><a href="#"><span class="glyphicon glyphicon-camera"></span></a></li>
-	              <li><a href="#" class='glyphicon glyphicon-user'></a></li>
-	              <li><a href="#" class='glyphicon glyphicon-map-marker'></a></li>
-	              <li class='pull-right'>
-	              	  <input type="submit" class='btn btn-primary btn-xs' value="{{ next }}Post"/>
-	              </li>
-	          </ul>
-	      </form>
-	          </div>
-	      </div>
-	  </div>
+  <div id="backToTop"></div>
+</div>
+<div class="container addpost bootstrap snippets bootdey">
+	<div class="row  ">
+		<div class="addpost col-md-offset-3 col-md-6 col-xs-12">
+			<div class="well well-sm well-social-post">
+				<form method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<ul class="list-inline" id='list_PostActions'>
+						<li class='active'><a href='#'>Update status</a></li>
+					</ul>					 
+					<div class="form-group">
+						{% if user.image.url is not null %}  
+							<img   src="{{ MEDIA_URL }}{{ user.image.url }}"/>{{ form.body }}
+						{% else %}
+							<img class="img-responsive img-rounded" src="{% static 'img/user.jpg' %}"   alt="User picture">         
+						{% endif %}
+						{{ form.banner_photo }}
+					</div>
+					<ul class='list-inline post-actions'>
+						<li><a href="#"><span class="glyphicon glyphicon-camera"></span></a></li>
+						<li><a href="#" class='glyphicon glyphicon-user'></a></li>
+						<li><a href="#" class='glyphicon glyphicon-map-marker'></a></li>
+						<li class='pull-right'>
+							<input type="submit" class='btn btn-primary btn-xs' value="{{ next }}Post"/>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
 	</div>
+</div>
 	{% include 'sidebar.html'%}     
-	<body>                                                     
-  <div class="container">
+<body>    
+  <div class="switch">
+		<div class="circle"></div>
+	</div>			
+  <div class="container">                                        
   	<div class="row"> 
       <div class="col-md-12">
         <div id="content" class="content content-full-width">
@@ -56,7 +63,7 @@
 		                <li>
 	                    <div class="timeline-time">
 	                      <span class="date">{{ qs.date|date:"F" }}</span>
-	                      <span class="time">{{ qs.date|time }}</span>
+	                      <span class="date">{{ qs.date|timesince }}</span>
 	                    </div>
 											<div class="timeline-icon">
 												<a href="javascript:;">&nbsp;</a>
@@ -65,7 +72,7 @@
 												<div class="timeline-header">
 												 <span class="userimage">
 												 	  {% if qs.user.image.url is not null %}  
-												      <img src="{{ MEDIA_URL }}{{ qs.user.image.url }}" alt=""> 
+												      <img src="{{ MEDIA_URL }}{{ qs.user.image.url }}" alt="" class="be-ava-comment"> 
 												    {% else %}
 												      <img alt=""src="{% static 'img/user.jpg' %}">
 												    {% endif %} 
@@ -90,7 +97,7 @@
 							   
 														 {% for comment  in qs.comment_set.all %}
 														<span class="stats-text">
-															 {{ comment|length}}  
+															 {{ comment.count}}  
 														</span>
 														{% endfor %} 
 													</div>
@@ -104,12 +111,13 @@
 												</div>
 		                  </div>
 		                  {% endfor %}
- 
-	                        </div>
-									 
-		             		</ul>
- 
-									
+  									</li>
+  								</ul>
+									<div class="progress-wrap">
+										<svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+											<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+										</svg>
+									</div>
                   </div>
                 </div>
               </div>
@@ -117,6 +125,8 @@
           </div>
         </div>
 	    </div>
-   </body>
+	  <div>
+  </body>
 </html>
 {% endblock %}
+{% include 'snippets/js.html' %}

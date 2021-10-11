@@ -31,15 +31,11 @@ input {
   margin-left: 60px;
 }
  
-.addpost{
-  width: 120%;
-  margin-top:20px; 
-  margin-left: 125px;
-  background-color: #eeeeee;
-}
 
 .well-social-post {
   border-radius: 0;
+  width: 118%;
+  margin-left: 270px;
   background-color: #ffffff;
   border: 1px solid #ddd;
   padding:0;

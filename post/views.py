@@ -8,18 +8,18 @@ from .forms import PostForm,CommentForm,EditForm
 from account.models import User
 from django.contrib.auth.mixins import (LoginRequiredMixin,PermissionRequiredMixin)
 
-
-class PostView(TemplateView):
+class PostView(LoginRequiredMixin,TemplateView):
     
     template_name = "post/post_list.html"
     
     def get_context_data(self, *args, **kwargs):
         context = super(PostView, self).get_context_data(*args, **kwargs)
-        post = Post.objects.filter(status='published') 
+        post = Post.objects.filter(status='published').order_by('-date')
         form = PostForm(self.request.POST or None,self.request.FILES or None)
         context.update({
             "post":post,
             "form":form,
+ 
         })
         return context
 
@@ -32,6 +32,27 @@ class PostView(TemplateView):
             post = form.save()
             return redirect("post")
         return render(self.request, self.template_name, context)
+
+def PostDetailView(request,pk):
+    post = get_object_or_404(Post,pk=pk,status='published')
+    comments = post.comment_set.all()
+    new_comment = None
+
+    if request.method == 'POST':
+        form = CommentForm(data=request.POST)
+        if form.is_valid():       
+            new_comment = form.save(commit=False)
+            new_comment.post = post
+            new_comment.author = request.user
+            new_comment.save()
+    else:
+        form = CommentForm()                   
+    return render(request,
+                  'post/post_detail.html',
+                  {'post': post,
+                   'comments': comments,
+                   'new_comment': new_comment,
+                   'form': form})
 
 def Draft(LoginRequiredMixin,request):
     post = Post.objects.filter(status='draft')
@@ -57,13 +78,7 @@ def PostCreate(request):
     context = {'form': form,}
     return render(request, 'post.html', context)
 
-class PostDetailView(LoginRequiredMixin,View):
-    def get(self, request, pk, *args, **kwargs):
-        post = get_object_or_404(Post, pk=pk, status='published')
-        count_hit = True
-        comment = post.comment_set.all()
-        context = {'post':post,'comment': comment,}
-        return render(request, "post/post_detail.html", context)
+
 
 def comment(request,pk):
     post= get_object_or_404(Post, pk=pk)

@@ -8,10 +8,15 @@
      {% include 'snippets/css.html'%}
     <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
     <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/comment.css' %}">
+    <link rel="stylesheet" href="{% static 'css/backtop.css' %}">
   <title></title>
 </head>
 {% include 'sidebar.html'%}
 <body>
+  <div class="switch">
+    <div class="circle"></div>
+  </div>      
   <div class="container">
     <div class="row"> 
       <div class="col-md-12">
@@ -32,7 +37,7 @@
                         <div class="timeline-header">
                          <span class="userimage">
                             {% if post.user.image.url is not null %}  
-                              <img src="{{ MEDIA_URL }}{{ post.user.image.url }}" alt=""> 
+                              <img class="be-ava-comment" src="{{ MEDIA_URL }}{{ post.user.image.url }}" alt=""  > 
                             {% else %}
                               <img alt=""src="{% static 'img/user.jpg' %}">
                             {% endif %} 
@@ -55,28 +60,60 @@
                         </div>
                         <div class="timeline-likes">
                           <div class="stats-right">
-                            <span class="stats-text">21 Comments</span>
+                            <span class="stats-text">{{ comment.comment_set.all.count }}</span>
                           </div>
                           <div class="stats">
                             <span class="stats-total"> </span>
                           </div>
                         </div>
-                        <div class="timeline-footer">
-                        <a href=" " class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
-                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Detail</a>
-                        </div>
+ 
                         <div class="timeline-comment-box">
-                          <div class="user"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"></div>
+                          <div class="user">
+                          {% if user.image.url is not null %}  
+                          <img src="{{ MEDIA_URL }}{{ user.image.url }}"/>{{ form.body }}
+                          {% else %}
+                          <img class="img-responsive img-rounded" src="{% static 'img/user.jpg' %}"   alt="User picture">         
+                          {% endif %} </div>
                           <div class="input">
-                            <form action="">
+                            <form method="post" enctype="multipart/form-data">
+                              {% csrf_token %}
                               <div class="input-group">
-                                <input type="text" class="form-control rounded-corner" placeholder="Write a comment...">
+                                {{form.text }} 
                                 <span class="input-group-btn p-l-10">
-                                <button class="btn btn-primary f-s-12 rounded-corner" type="button">Comment</button>
+                                <input type="submit" class='btn btn-primary btn-xs' value="{{ next }}Comment">
                                 </span>
                               </div>
                             </form>
-                          </div>
+                              {% for comment in post.comment_set.all %}
+                                {% if user.is_authenticated %}
+                              <h1 class="comments-title"> </h1>
+                              <div class="be-comment">
+                                <div class="be-img-comment">  
+                                  <a href="blog-detail-2.html">
+                                    {% if comment.author.image.url is not null %}  
+                                    <img   src="{{ MEDIA_URL }}{{ comment.author.image.url }}" alt="" class="be-ava-comment">
+                                    {% else %}
+                                    <img  src="{% static 'img/user.jpg' %}" alt="" class="be-ava-comment">
+                                    {% endif %}
+                                  </a>
+                                </div>
+                                <div class="be-comment-content">
+                                    <span class="be-comment-name">
+                                      <a href="blog-detail-2.html">{{ comment.author.last_name }}</a>
+                                      </span>
+                                    <span class="be-comment-time">
+                                      <i class="fa fa-clock-o"></i>
+                                      {{ comment.date_created }}
+                                    </span>
+                                  <p class="be-comment-text">
+                                    {{ comment.text}}
+                                  </p>
+                                </div>
+                              </div>
+                              {% endif %}
+                              {% empty %}
+                                <p>No Comments Yet, Be the first to commen.</p>
+                              {% endfor %}
                       </div>  
                     </ul>
                   </div>
@@ -88,4 +125,5 @@
       </div>
    </body>
 </html>
+{% include 'snippets/js.html' %}
 {% endblock %}

@@ -25,6 +25,10 @@ class CommentForm(forms.ModelForm):
         'text',
         'author',)
     
+        widgets = {
+            'text': forms.Textarea(attrs={'placeholder': "Write a comment..."   }),
+        }
+
 class EditForm(forms.ModelForm):
     class Meta:
         model = Post
