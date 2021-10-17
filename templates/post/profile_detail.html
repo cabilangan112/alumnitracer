@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
    {% include 'snippets/css.html'%}
   <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
-  <link rel="stylesheet" href="{% static 'css/post.css' %}">
+  <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
   <link rel="stylesheet" href="{% static 'css/addpost.css' %}">
   <link rel="stylesheet" href="{% static 'css/backtop.css' %}">
 	<title></title>
@@ -59,7 +59,7 @@
             <div class="tab-content p-0">
               <div class="tab-pane fade active show" id="profile-post">
                 <ul class="timeline">
-                  {% for qs in post %}
+                  {% for qs in posts %}
 		                <li>
 	                    <div class="timeline-time">
 	                      <span class="date">{{ qs.date|date:"F" }}</span>
@@ -77,7 +77,7 @@
 												      <img alt=""src="{% static 'img/user.jpg' %}">
 												    {% endif %} 
 												  </span>
-												  <span class="username"><a href="{% url 'post:profile-detail' qs.user.pk  %}">{{ qs.user.first_name}} {{ qs.user.last_name}} </a> <small></small></span>
+												  <span class="username"><a href="javascript:;">{{ qs.user.first_name}} {{ qs.user.last_name}} </a> <small></small></span>
 												  <span class="pull-right text-muted">
 												   {% get_hit_count for qs %} views
 												  </span>

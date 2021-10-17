@@ -1,3 +1,4 @@
+from emoji_picker.widgets import EmojiPickerTextInputAdmin, EmojiPickerTextareaAdmin
 from django import forms
 from .models import Post, Comment
 

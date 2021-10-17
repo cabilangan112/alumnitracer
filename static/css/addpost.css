@@ -27,8 +27,9 @@ textarea {
     letter-spacing: 1px;
     outline: none;
 }
-input {
+.banner input {
   margin-left: 60px;
+  background-color: ;
 }
  
 

@@ -28,7 +28,7 @@
                     <li>
                       <div class="timeline-time">
                         <span class="date">{{ post.date|date:"F" }}</span>
-                        <span class="time">{{ post.date|time }}</span>
+                        <span class="date">{{ post.date|time }}</span>
                       </div>
                       <div class="timeline-icon">
                         <a href="javascript:;">&nbsp;</a>
@@ -110,10 +110,10 @@
                                   </p>
                                 </div>
                               </div>
-                              {% endif %}
-                              {% empty %}
-                                <p>No Comments Yet, Be the first to commen.</p>
-                              {% endfor %}
+                            {% endif %}
+                          {% empty %}
+                            <p>No Comments Yet, Be the first to comment...</p>
+                          {% endfor %}
                       </div>  
                     </ul>
                   </div>

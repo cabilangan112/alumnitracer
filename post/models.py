@@ -13,7 +13,7 @@ POST_STATUS = (
 
 class Post(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    banner_photo = models.ImageField(upload_to = 'post')
+    banner_photo = models.ImageField(upload_to = 'post' , blank=True)
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now_add=True)

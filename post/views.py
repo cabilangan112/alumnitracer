@@ -33,9 +33,27 @@ class PostView(LoginRequiredMixin,TemplateView):
             return redirect("post")
         return render(self.request, self.template_name, context)
 
+def PostProfileView(request,pk):
+    qs = get_object_or_404(User, pk=pk)
+    posts = qs.post_set.all().order_by('-date')
+
+    if request.method == 'POST':
+        form = PostForm(data=request.POST)
+        if form.is_valid():       
+            post = form.save(commit=False)
+            post.user = request.user
+            post = form.save()
+            return redirect('post:profile-detail', pk=pk)
+    else:
+        form = PostForm()                   
+    return render(request,
+                  'post/profile_detail.html',
+                  {'posts': posts,
+                   'form': form})
+
 def PostDetailView(request,pk):
     post = get_object_or_404(Post,pk=pk,status='published')
-    comments = post.comment_set.all()
+    comments = post.comment_set.all().order_by('-date_created')
     new_comment = None
 
     if request.method == 'POST':
@@ -45,6 +63,7 @@ def PostDetailView(request,pk):
             new_comment.post = post
             new_comment.author = request.user
             new_comment.save()
+            return redirect('post:detail', pk=pk)
     else:
         form = CommentForm()                   
     return render(request,

@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 try:
     from django.core.urlresolvers import reverse
 except ImportError:
@@ -28,27 +29,49 @@ else:
 def inbox(request, template_name='chat/inbox.html'):
     query = request.GET.get('q')
     message_list = Message.objects.inbox_for(request.user).search(query)
-
+    paginator = Paginator(message_list, 10)
+    page = request.GET.get('page')
+    try:
+        post = paginator.page(page)
+    except PageNotAnInteger:
+        post = paginator.page(1)
+    except EmptyPage:
+        post = paginator.page(paginator.num_pages)
     if message_list.exists():
-        return render(request, template_name, {'message_list': message_list,})
-    return render(request, template_name, {'message_list': message_list,})
+        return render(request, template_name, {'message_list': message_list, 'post':post})
+    return render(request, template_name, {'message_list': message_list,'post':post })
 
 @login_required
 def outbox(request, template_name='chat/outbox.html'):
     query = request.GET.get('q')
     message_list = Message.objects.outbox_for(request.user).search(query)
-    return render(request, template_name, {
-        'message_list': message_list,
-    })
+    paginator = Paginator(message_list, 10)
+    page = request.GET.get('page')
+    try:
+        post = paginator.page(page)
+    except PageNotAnInteger:
+        post = paginator.page(1)
+    except EmptyPage:
+        post = paginator.page(paginator.num_pages)
+    if message_list.exists():
+        return render(request, template_name, {'message_list': message_list, 'post':post})
+    return render(request, template_name, {'message_list': message_list,'post':post })
 
 @login_required
 def trash(request, template_name='chat/trash.html'):
     query = request.GET.get('q')
     message_list = Message.objects.trash_for(request.user).search(query)
-    return render(request, template_name, {
-        'message_list': message_list,
-    })
-
+    paginator = Paginator(message_list, 10)
+    page = request.GET.get('page')
+    try:
+        post = paginator.page(page)
+    except PageNotAnInteger:
+        post = paginator.page(1)
+    except EmptyPage:
+        post = paginator.page(paginator.num_pages)
+    if message_list.exists():
+        return render(request, template_name, {'message_list': message_list, 'post':post})
+    return render(request, template_name, {'message_list': message_list,'post':post })
 @login_required
 def compose(request, recipient=None, form_class=ComposeForm,
         template_name='chat/compose.html', success_url=None,

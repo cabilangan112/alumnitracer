@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'post.apps.PostConfig', 
     'django_countries',
     'hitcount',
+    'emoji_picker',
 ]
 
 MIDDLEWARE = [

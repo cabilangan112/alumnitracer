@@ -139,6 +139,10 @@
                 <a href="{% url 'account:user-detail' user.email %} ">
                   <i class="fa fa-tachometer-alt"></i>
                   <span>{{ user.email}}</span>
+                </a> 
+                  <a href="{% url 'post:profile-detail' user.pk %}">
+                  <i class="fa fa-tachometer-alt"></i>
+                  <span>Posts </span>
                 </a>            
                 <a href="{% url 'account:upload' user.email %}">
                   <i class="fa fa-tachometer-alt"></i>
