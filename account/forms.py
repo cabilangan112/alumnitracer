@@ -161,3 +161,13 @@ class UploadForm(forms.ModelForm):
             'image',
 
             ]
+
+class PasswordResetForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+ 
+        fields = [
+            'email',
+
+            ]

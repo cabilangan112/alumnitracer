@@ -13,11 +13,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include, reverse_lazy
+from django.urls import  path, include, reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
-from account.views import LoginView, RegisterView 
+from account.views import LoginView, RegisterView,password_reset_request 
 from post.views import PostView
 
 urlpatterns = [
@@ -32,6 +33,12 @@ urlpatterns = [
     path('post/', include('post.urls', namespace='post')),
     path('register/',RegisterView.as_view(), name='register'),
     path('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
+
+    path('reset_password/', auth_views.PasswordResetView.as_view(), name ='reset_password'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="registration/password/password_reset_confirm.html"), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password/password_reset_complete.html'), name='password_reset_complete'),  
+
 ]
 urlpatterns.extend(
     static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) +
