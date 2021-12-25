@@ -68,6 +68,18 @@ class LoginView(TemplateView):
 
         return render(self.request, self.template_name, context)
 
+class DepartmentView(LoginRequiredMixin,View):
+    def get(self, request,*args, **kwargs):
+        qs = Department.objects.all().order_by("-date_modified") 
+        return render(request, "profile/department_list.html",{'qs':qs})
+
+class CourseView(LoginRequiredMixin,View):
+    def get(self, request,*args, **kwargs):
+ 
+        qs = Course.objects.all().order_by("-date_modified") 
+ 
+        return render(request, "profile/course_list.html",{'qs':qs})
+
 class RegisterView(TemplateView):
 	"""
 	Display register in page where registered users can log in

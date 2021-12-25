@@ -5,6 +5,8 @@ app_name='account'
 
 urlpatterns = [
     path('', views.ProfileView.as_view(), name='post'),
+    path('course/', views.CourseView.as_view(), name='course'),
+    path('department', views.DepartmentView.as_view(), name='depatment'),
     path('<int:pk>/', views.ProfileDetailView.as_view(), name='detail'),
     path('<user>/', views.UserDetailView.as_view(), name='user-detail'),
     path('upload/<email>/', views.UploadView, name='upload'),

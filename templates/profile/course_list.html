@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Almni Tracer | List</title>
+    {% include 'snippets/css.html'%}
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="{% static 'css/alumni-list.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/navsnippets.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  </head>
+  <body>
+    {% include 'sidebar.html'%}
+    <div class="players">
+      <h2>Alumni Tracer | List</h2>
+      <div class="header">
+        <div class="player-number">ID Number</div>
+        <div class="player-name">Course code</div>
+        <div class="player-city">Corse Description</div>
+                <div class="player-value"></div>
+        <div class="player-stats">Date Created</div>
+      </div>
+      {% if qs %}
+        {% for qs in qs %}
+          <div class="player">
+            <div class="player-number">  {{qs.pk}}</div>
+            <div class="player-name" data-title="Name: "> <a href=" ">
+            {{qs.course_code}}  </a></div>
+            <div class="player-city" data-title="City: ">{{qs.course_description   }}  </div>
+                          <div class="player-value" data-title="Value: "> </div>
+            <div class="player-value" data-title="Value: ">{{qs.date_created }}</div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>Empty</p>
+      {% endif %}                
+    </div>
+  </body>l
+  <script src="{% static 'js/alumni.js' %}"></script>
+  {% include 'snippets/js.html' %}
+</html>
+ 

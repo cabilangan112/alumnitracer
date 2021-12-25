@@ -9,6 +9,20 @@ GENDER = (
     ('Female', 'Female')
     )
 
+RANGE = (
+    ('', '------ RANGE ------'),   
+    ('1,000 - 5,000', '1,000 - 5,000'),
+    ('5,000 - 10,000 ', '5,000 - 10,000'),
+    ('10,000 - 15,000', '10,000 - 15,000'),
+    ('15,000 - 20,000', '15,000 - 20,000'),
+    ('20,000 - 25,000 ','20,000 - 25,000'),
+    ('25,000 - 30,000', '25,000 - 30,000'),
+    ('30,000 - 35,000', '30,000 - 35,000'),
+    ('35,000 - 40,000', '35,000 - 40,000'),
+    ('40,000 - 45,000 ','40,000 - 45,000'),
+    ('45,000 - 50,000', '45,000 - 50,000'),
+    )
+
 CIVIL_STATUS = (
     ('', '--- SELECT ---'),
     ('Single', 'Single'),
@@ -82,7 +96,7 @@ class PersonalInformationForm(forms.Form):
     designation                 = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'Designation *'}))
     department_division         = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'Deparment Division *' }))
     job_status                  = forms.ChoiceField(choices=STATUS)
-    monthly_range_income        = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder': 'Monthly Income Range *'}))
+    monthly_range_income        = forms.ChoiceField(choices=RANGE)
     persuing_degree_ndmc        = forms.ChoiceField(choices=COURSE_RELATED)
     obtaining_degree_ndmc       = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'If not, how long did it take you to find a job after obtaining your degree from NDMC? * '}))
     current_job                 = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'How did you come to know about your current job? * '}))
@@ -90,7 +104,7 @@ class PersonalInformationForm(forms.Form):
     work_related_course         = forms.ChoiceField(choices=COURSE_RELATED)
     nature_of_employment        = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'IN THE CASE OF SELF EMPLOYMENT, what is the Nature of Employment? '}))
     number_of_years             = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder': 'Number Of Years Working on tharf Company *'}))
-    monthly_income_range        = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder': 'Monthly Income Range *'}))
+    monthly_income_range        = forms.ChoiceField(choices=RANGE)
     degree_program              = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'Degree Program * '}))
     pursuing_further_studies    = forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'IF PURSUING FURTHER STUDIES *'}))
     not_pursuing_further_studies= forms.CharField(max_length=200,widget=forms.TextInput(attrs={'placeholder': 'IF NOT PURSUING FURTHER STUDIES * '}))

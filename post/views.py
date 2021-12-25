@@ -7,6 +7,8 @@ from .models import Post,Comment
 from .forms import PostForm,CommentForm,EditForm
 from account.models import User
 from django.contrib.auth.mixins import (LoginRequiredMixin,PermissionRequiredMixin)
+from hitcount.models import HitCount
+from hitcount.views import HitCountMixin
 
 class PostView(LoginRequiredMixin,TemplateView):
     
@@ -54,8 +56,12 @@ def PostProfileView(request,pk):
 def PostDetailView(request,pk):
     post = get_object_or_404(Post,pk=pk,status='published')
     comments = post.comment_set.all().order_by('-date_created')
-    new_comment = None
 
+
+    hit_count = HitCount.objects.get_for_object(post)
+    hit_count_response = HitCountMixin.hit_count(request, hit_count)
+    count_hit = True
+    new_comment = None
     if request.method == 'POST':
         form = CommentForm(data=request.POST)
         if form.is_valid():       
@@ -71,7 +77,8 @@ def PostDetailView(request,pk):
                   {'post': post,
                    'comments': comments,
                    'new_comment': new_comment,
-                   'form': form})
+                   'form': form,
+                   'count_hit':count_hit})
 
 def Draft(LoginRequiredMixin,request):
     post = Post.objects.filter(status='draft')
@@ -96,8 +103,6 @@ def PostCreate(request):
         form = PostForm()
     context = {'form': form,}
     return render(request, 'post.html', context)
-
-
 
 def comment(request,pk):
     post= get_object_or_404(Post, pk=pk)
