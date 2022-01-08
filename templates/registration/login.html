@@ -59,7 +59,7 @@ between 6 months and 3 years). </p>
                     </div>
                     {% endif %}
                   {% endblock %}
-                <div class="row mb-4 px-3"> <small class="font-weight-bold">Don't have anaccount?  <a class="text-danger " href='{% url "register" %}'>Register</a> | <a class="text-danger " href='{% url "reset_password" %}'>forget password</a></small> 
+                <div class="row mb-4 px-3"> <small class="font-weight-bold">Don't have anaccount?  <a class="text-danger " href='{% url "register" %}'>Register</a> | <a class="text-danger " href='{% url "account:password_reset" %}'>forget password</a></small> 
                   </div>
               <input type="submit" class="btnRegister"  value="{{ next }}Login"/>
                 </div>

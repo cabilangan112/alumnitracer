@@ -30,17 +30,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'alumnitracer1941@gmail.com' 
 EMAIL_HOST_PASSWORD = 'alumnitracer112'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
-DEFAULT_FROM_EMAIL = 'Jass <alumnitracer1941@gmail.com>'
-ADMINS = (
-    ('You', 'alumnitracer1941@gmail.com'),
-)
+ 
+ 
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -153,4 +149,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
 LOGIN_REDIRECT_URL = '/login/'
 LOGIN_URL = '/login'
 AUTH_USER_MODEL = 'account.User'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
+ 

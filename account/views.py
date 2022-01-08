@@ -1,4 +1,14 @@
-from django.shortcuts import render
+from django.conf import settings
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
 from django.views.generic.base import TemplateView,View
 from django.shortcuts import get_object_or_404, redirect
 from .models import Course,Department
@@ -17,7 +27,7 @@ from alumni.models import PersonalInformation
 from django.views import generic
 from.models import User
 from django.urls import reverse	
-from .forms import UserLoginForm,UploadForm, PasswordResetForm,UserRegisterForm,EditProfileForm,EditPasswordForm
+from .forms import UserLoginForm,UploadForm,UserRegisterForm,EditProfileForm,EditPasswordForm
 from django.contrib.auth.mixins import LoginRequiredMixin
  
 class ProfileView(LoginRequiredMixin,View):
@@ -201,19 +211,16 @@ def password_reset_request(request):
                     'domain':'127.0.0.1:8000',
                     'site_name': 'Website',
                     "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-                    "user": user,
                     'token': default_token_generator.make_token(user),
                     'protocol': 'http',
                     }
                     email = render_to_string(email_template_name, c)
+                    email_from = settings.EMAIL_HOST_USER
                     try:
-                        send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
+                        send_mail(subject, email, email_from, [user.email], fail_silently=False)
                     except BadHeaderError:
-
                         return HttpResponse('Invalid header found.')
-                        
-                    messages.success(request, 'A message with reset password instructions has been sent to your inbox.')
-                    return redirect ("/" )
-            messages.error(request, 'An invalid email has been entered.')
+                    return redirect ("password_reset_done" )
+
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="registration/password_reset.html", context={"password_reset_form":password_reset_form})
